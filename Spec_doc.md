@@ -18,7 +18,7 @@ This software aims to target a wide range of audiences. It's perfect for:
 - **Educators**  in the field of design or engineering, who can use this tool to demonstrate concepts in a more interactive and engaging way. 
 - **Hobbyists** who can use this tool to plan and visualize their projects 
 
-Essentially, anyone who needs a user-friendly and accessible tool for creating, viewing, and manipulating  2D  designs  could  benefit from this project.  It's all  about making  design more inclusive and accessible! 
+Essentially, anyone who needs a user-friendly and accessible tool for creating, viewing, and manipulating  2D  designs  could  benefit from this project.  It's all  about making  design more inclusive and accessible!  
 
 #### Success Metrics 
 
@@ -27,7 +27,7 @@ Some success metrics that are defined to evaluate the effectiveness of the softw
 1. User activity - measuring the number of users actively using the software. 
 1. Error rates - tracking the number of errors faced by the end user. 
 1. Feature usage – monitoring the features used and demanded by the targeted userbase. 
-1. User satisfaction - gather feedback on user satisfaction and suggestions for improvements. 
+1. User satisfaction - gathering the feedback on user satisfaction and suggestions for improvements. 
 
 ---
 
