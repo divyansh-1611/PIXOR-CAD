@@ -14,9 +14,9 @@ The requirement analysis for this project involves a comprehensive examination o
 
 This software aims to target a wide range of audiences. It's perfect for: 
 
-- Students learning about design or engineering, who need a simple tool to create and understand 2D designs. 
-- Educators  in the field of design or engineering, who can use this tool to demonstrate concepts in a more interactive and engaging way. 
-- Hobbyists who can use this tool to plan and visualize their projects 
+- **Students** learning about design or engineering, who need a simple tool to create and understand 2D designs. 
+- **Educators**  in the field of design or engineering, who can use this tool to demonstrate concepts in a more interactive and engaging way. 
+- **Hobbyists** who can use this tool to plan and visualize their projects 
 
 Essentially, anyone who needs a user-friendly and accessible tool for creating, viewing, and manipulating  2D  designs  could  benefit from this project.  It's all  about making  design more inclusive and accessible! 
 
