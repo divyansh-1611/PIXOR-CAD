@@ -4,12 +4,13 @@
 
 ###  Team Members
 
-Divyansh Kumar
-Raghav Deshwal
-Ashish Sharma
-Sarthak Sharma
-Kavinder Singh
-Aditya Bhardwaj
+<br>Divyansh Kumar
+<br>Raghav Deshwal
+<br>Ashish Sharma
+<br>Sarthak Sharma
+<br>Kavinder Singh
+<br>Aditya Bhardwaj
+
 
 
 ### Introduction 
