@@ -20,7 +20,7 @@ Aditya Bhardwaj
 <a href = "https://github.com/bhardwajj03/"><img src="https://img.icons8.com/?size=1x&id=62856&format=png"/></a><a href = "https://www.linkedin.com/in/aditya-bhardwaj-b33b90247/"><img width = "3%" height = "auto" src="https://img.icons8.com/fluent/48/000000/linkedin.png"/></a>
 <br>  
 Kavinder Singh
-<a href = "https://github.com/kavinder-singh-3702"><img src="https://img.icons8.com/?size=1x&id=62856&format=png"/></a><a href = ""><img width = "3%" height = "auto" src="https://img.icons8.com/fluent/48/000000/linkedin.png"/></a>
+<a href = "https://github.com/kavinder-singh-3702"><img src="https://img.icons8.com/?size=1x&id=62856&format=png"/></a><a href = "https://www.linkedin.com/in/kavinder-singh-91ba4a1b2/"><img width = "3%" height = "auto" src="https://img.icons8.com/fluent/48/000000/linkedin.png"/></a>
 <br>
 Ashish Sharma  
 <a href = "https://github.com/Ash1327"><img src="https://img.icons8.com/?size=1x&id=62856&format=png"/></a><a href = "http://www.linkedin.com/in/ashish-sharma-aa1b0a230"><img width = "3%" height = "auto" src="https://img.icons8.com/fluent/48/000000/linkedin.png"/></a>  
