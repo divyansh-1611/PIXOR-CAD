@@ -35,4 +35,4 @@ The primary Programming language that this software would be built on is going t
 - Seaborn Version 0.11.2 (as this software deals with more complex visuals, Seaborn is the most suitable library for visualizations. (https://pypi.org/project/seaborn/0.11.2/)) 
 - Scipy (for dealing with complex coordinate related functions to ensure smooth experience while designing.) 
 - Pytest version 7.4.2 (https://pypi.org/project/pytest/) 
-Simple 2D CAD software 
+
