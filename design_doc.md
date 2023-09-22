@@ -1,0 +1,37 @@
+# SOFTWARE DESIGN
+
+## PIXOR-CAD 
+
+###  Team Members
+
+Divyansh Kumar
+Raghav Deshwal
+Ashish Sharma
+Sarthak Sharma
+Kavinder Singh
+Aditya Bhardwaj
+
+
+### Introduction 
+
+This project aims to bring the power and precision of CAD to a wider audience, making it accessible and easy to use for everyone. Our software will be designed with simplicity and user- friendliness in mind, ensuring that even those with minimal technical knowledge can create and manipulate 2D designs with ease. It will include basic features such as drawing lines, circles, rectangles, and other shapes, as well as more advanced functionalities like layer management, dimensioning, and exporting to various file formats. We believe that this project has the potential to revolutionize the way people approach design, by breaking down the barriers of traditional CAD software and making design a more inclusive and accessible field.  
+
+---
+
+### Design Analysis  
+
+
+
+
+
+### Tech-Stack
+
+The primary Programming language that this software would be built on is going to be python. The specifications and versions of the libraries that we’re going to use for building this software are specified below -   
+
+- Python Version 3.9.4 (https://www.python.org/downloads/release/python-394/) 
+- PyQT5  v 5.15.9 LTS stable build  (https://repology.org/repository/devuan\_unstable 
+- Tkinter nixpkgs stable 22.11 version 3.10.11 
+- Seaborn Version 0.11.2 (as this software deals with more complex visuals, Seaborn is the most suitable library for visualizations. (https://pypi.org/project/seaborn/0.11.2/)) 
+- Scipy (for dealing with complex coordinate related functions to ensure smooth experience while designing.) 
+- Pytest version 7.4.2 (https://pypi.org/project/pytest/) 
+Simple 2D CAD software 
