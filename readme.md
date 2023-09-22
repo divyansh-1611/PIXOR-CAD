@@ -17,7 +17,7 @@ Raghav Deshwal
 <a href = "https://github.com/rdeshwal731"><img src="https://img.icons8.com/?size=1x&id=62856&format=png"/></a><a href = "https://www.linkedin.com/in/raghav-deshwal-08a71920b/"><img width = "3%" height = "auto" src="https://img.icons8.com/fluent/48/000000/linkedin.png"/></a>
 <br>
 Aditya Bhardwaj  
-<a href = "https://github.com/bhardwajj03/"><img src="https://img.icons8.com/?size=1x&id=62856&format=png"/></a><a href = ""><img width = "3%" height = "auto" src="https://img.icons8.com/fluent/48/000000/linkedin.png"/></a>
+<a href = "https://github.com/bhardwajj03/"><img src="https://img.icons8.com/?size=1x&id=62856&format=png"/></a><a href = "https://www.linkedin.com/in/aditya-bhardwaj-b33b90247/"><img width = "3%" height = "auto" src="https://img.icons8.com/fluent/48/000000/linkedin.png"/></a>
 <br>  
 Kavinder Singh
 <a href = "https://github.com/kavinder-singh-3702"><img src="https://img.icons8.com/?size=1x&id=62856&format=png"/></a><a href = ""><img width = "3%" height = "auto" src="https://img.icons8.com/fluent/48/000000/linkedin.png"/></a>
