@@ -18,9 +18,9 @@ This project aims to bring the power and precision of CAD to a wider audience, m
 
 ---
 
-### Design Analysis  
+### Design Flow  
 
-
+<h1 align = "center"><img width = "100%" height = "auto" src="https://github.com/divyansh-1611/SD-workshop-project/blob/main/assets/uml_pic.png?raw=true" height="175px"/>
 
 
 
