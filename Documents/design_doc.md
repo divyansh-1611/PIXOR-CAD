@@ -25,13 +25,13 @@ This project aims to bring the power and precision of CAD to a wider audience, m
 
 ### Use Case diagram
 
-<h1 align = "center"><img width = "100%" height = "auto" src="use case.png" height="175px"/>
+<h1 align = "center"><img width = "100%" height = "auto" src="https://raw.githubusercontent.com/divyansh-1611/SD-workshop-project/main/assets/use%20case.png" height="175px"/>
 
 ### Package Diagram
-<h1 align = "center"><img width = "100%" height = "auto" src="package diagram.svg" height="175px"/>
+<h1 align = "center"><img width = "100%" height = "auto" src="https://raw.githubusercontent.com/divyansh-1611/SD-workshop-project/3ec55c857ef01f4aaa55390faf5a5d16367aef3a/assets/package%20diagram.svg" height="175px"/>
 
 ### Class Diagram
-<h1 align = "center"><img width = "100%" height = "auto" src="class diag.svg" height="175px"/>
+<h1 align = "center"><img width = "100%" height = "auto" src="https://raw.githubusercontent.com/divyansh-1611/SD-workshop-project/3ec55c857ef01f4aaa55390faf5a5d16367aef3a/assets/class%20diag.svg" height="175px"/>
 
 ###
 ### Tech-Stack
