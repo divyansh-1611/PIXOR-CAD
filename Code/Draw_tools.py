@@ -3,12 +3,6 @@ import pickle
 import os
 from   tkinter import *
 from   tkinter.filedialog import *
-import main
-# from   toolbarbutton import ToolBarButton
-# import tkrpncalc
-# import txtdialog
-# import entities
-import pprint
 import entities
 
 
