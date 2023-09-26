@@ -1,25 +1,29 @@
 import tkinter as tk
 from tkinter import *
 import Pmw
+import Draw_tools
 
-root = tk.Tk()
-def __init__(self, **kw):
-        optiondefs = (
-            ('padx',           1,                   Pmw.INITOPT),
-            ('pady',           1,                   Pmw.INITOPT),
-            ('framewidth',     1,                   Pmw.INITOPT),
-            ('frameheight',    1,                   Pmw.INITOPT),
-            ('usecommandarea', self.usecommandarea, Pmw.INITOPT))
-        self.defineoptions(kw, optiondefs)
+
+class app_ui(Pmw.MegaWidget):
+    root = tk.Tk()
+    def __init__(self, **kw):
+            optiondefs = (
+                ('padx',           1,                   Pmw.INITOPT),
+                ('pady',           1,                   Pmw.INITOPT),
+                ('framewidth',     1,                   Pmw.INITOPT),
+                ('frameheight',    1,                   Pmw.INITOPT),
+                ('usecommandarea', self.usecommandarea, Pmw.INITOPT))
+            self.defineoptions(kw, optiondefs)
         
-        self.root = Tk()
-        self.initializeTk(self.root)
-        Pmw.initialise(self.root)
-        self.root.title(self.appname)
-        self.root.geometry('%dx%d' % (self.frameWidth, self.frameHeight))
-root.title("PIXOR CAD")
+            self.root = Tk()
+            self.initializeTk(self.root)
+            Pmw.initialise(self.root)
+            self.root.title(self.appname)
+            self.root.geometry('%dx%d' % (self.frameWidth, self.frameHeight))
+    root.title("PIXOR CAD")
 
-menu_bar = tk.Menu(root)
+rt = app_ui.root
+menu_bar = tk.Menu(app_ui.root)
 
 
 # Create a file menu
@@ -94,11 +98,11 @@ menu_bar.add_cascade(label="Report Bugs", menu=rb_menu)
 
 
 # Set the menu bar as the window's menu
-root.config(menu=menu_bar)
+app_ui.root.config(menu=menu_bar)
 
 
 # Frame for Drawing area
-f = Frame(root, bg="white", height=1400, width=1400)
+f = Frame(rt, bg="white", height=1400, width=1400)
 f.place(x=200, y=40)
 
 
@@ -130,7 +134,7 @@ poly_tools_menu.add_command(label="Ellipse")
 menu_bar.add_cascade(label="Poly Tools", menu=poly_tools_menu)
 
 # Set the menu bar as the window's menu
-root.config(menu=menu_bar)
+rt.config(menu=menu_bar)
 
 
-root.mainloop()
+rt.mainloop()
