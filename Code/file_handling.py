@@ -42,3 +42,21 @@ def filesave(self):
         self.save(outfile)
     else:
         self.filesaveas()
+
+    def filesaveas(self):
+        ftypes = [('CADvas dwg', '*.pkl'), ('ALL Files', '*')]
+        openfile = asksaveasfilename(filetypes=ftypes, defaultextension='.pkl')
+        if openfile:
+            self.filename = openfile
+            outfile = os.path.abspath(openfile)
+            self.save(outfile)
+
+    def save(self, file):
+        drawlist = []
+        for entity in self.curr.values():
+            drawlist.append({entity.type: entity.get_attribs()})
+        fext = os.path.splittext(file)[-1]
+        if fext == '.dxf':
+            import dxf
+            dxf.native2dxf(drawlist, file)
+        elif fext == '.pkl':
