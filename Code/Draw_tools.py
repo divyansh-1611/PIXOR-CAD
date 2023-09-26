@@ -6,7 +6,7 @@ from   tkinter.filedialog import *
 import entities
 
 
-geomcolor = 'white'     # color of geometry entities
+geomcolor = 'black'     # color of geometry entities
 constrcolor = 'magenta' # color of construction entities
 textcolor = 'cyan'      # color of text entities
 dimcolor = 'red'        # color of dimension entities
