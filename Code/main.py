@@ -1,7 +1,22 @@
 import tkinter as tk
 from tkinter import *
+import Pmw
+
 root = tk.Tk()
-root.geometry("1920x1080")
+def __init__(self, **kw):
+        optiondefs = (
+            ('padx',           1,                   Pmw.INITOPT),
+            ('pady',           1,                   Pmw.INITOPT),
+            ('framewidth',     1,                   Pmw.INITOPT),
+            ('frameheight',    1,                   Pmw.INITOPT),
+            ('usecommandarea', self.usecommandarea, Pmw.INITOPT))
+        self.defineoptions(kw, optiondefs)
+        
+        self.root = Tk()
+        self.initializeTk(self.root)
+        Pmw.initialise(self.root)
+        self.root.title(self.appname)
+        self.root.geometry('%dx%d' % (self.frameWidth, self.frameHeight))
 root.title("PIXOR CAD")
 
 menu_bar = tk.Menu(root)
