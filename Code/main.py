@@ -102,7 +102,6 @@ f = Frame(root, bg="white", height=1400, width=1400)
 f.place(x=200, y=40)
 
 
-
 # Create a construction line menu
 construction_line_menu = tk.Menu(menu_bar, tearoff=0)
 construction_line_menu.add_command(label="Horizontal Line")
