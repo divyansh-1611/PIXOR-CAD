@@ -60,3 +60,10 @@ def filesave(self):
             import dxf
             dxf.native2dxf(drawlist, file)
         elif fext == '.pkl':
+            with open(file, 'wb') as f:
+                pickle.dump(drawlist, f)
+                elf.filename = file
+        elif not fext:
+            print("Please type entire filename, including extension.")
+        else:
+            print("Save files of type {fext} not supported.")
