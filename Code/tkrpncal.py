@@ -12,3 +12,5 @@ def button(root, row, col, text, col, com=None, span=2, clr='blue', pad=20):
 
 def entry(root, var, col, =2, span=5)
     w = Entry(root, textvariable=var, relief=SUNKEN).grid(row=row, coloumn=col, coloumspan=span)
+
+class calc
