@@ -57,7 +57,6 @@ It should be simple and easy for users to understand and work on. It should also
 The primary Programming language that this software would be built on is going to be python. The specifications and versions of the libraries that we’re going to use for building this software are specified below -   
 
 - Python Version 3.9.4 (https://www.python.org/downloads/release/python-394/) 
-- PyQT5  v 5.15.9 LTS stable build  (https://repology.org/repository/devuan\_unstable 
 - Tkinter nixpkgs stable 22.11 version 3.10.11 
 - Seaborn Version 0.11.2 (as this software deals with more complex visuals, Seaborn is the most suitable library for visualizations. (https://pypi.org/project/seaborn/0.11.2/)) 
 - Scipy (for dealing with complex coordinate related functions to ensure smooth experience while designing.) 
