@@ -1,8 +1,7 @@
 import tkinter as tk
 from tkinter import *
 import Pmw
-import Draw_tools
-
+import const
 
 class app_ui(Pmw.MegaWidget):
     root = tk.Tk()
@@ -22,13 +21,62 @@ class app_ui(Pmw.MegaWidget):
             self.root.geometry('%dx%d' % (self.frameWidth, self.frameHeight))
     root.title("PIXOR CAD")
 
+    def __createInterface(self):
+        self.__createBalloon()
+        self.__createMenuBar()
+        self.__createDataArea()
+        self.__createCommandArea()
+        self.__createMessageBar()
+        self.__createAboutBox()
+        #
+        # Create the parts of the interface
+        # which can be modified by subclasses
+        #
+        self.busyWidgets = ( self.root, )
+        self.createMenuBar()
+        self.createInterface()
+
+    def createInterface(self):
+        # Override this method to create the interface for the app.
+        pass
+        
+    def main(self):
+        # This method should be left intact!
+        self.pack()
+        self.mainloop()
+        
+    def run(self):
+        self.main()
+
+class TestAppShell(app_ui):
+        usecommandarea=1
+        
+        def createButtons(self):
+                self.buttonAdd('Ok',
+                        helpMessage='Exit',
+                        statusMessage='Exit',
+                        command=self.quit)
+        
+        def createMain(self):
+                self.label = self.createcomponent('label', (), None,
+                                        Label,
+                                        (self.interior(),),
+                                        text='Data Area')
+                self.label.pack()
+                self.bind(self.label, 'Space taker')
+                
+        def createInterface(self):
+                app_ui.createInterface(self)
+                self.createButtons()
+                self.createMain()
+
 rt = app_ui.root
 menu_bar = tk.Menu(app_ui.root)
 
 
 # Create a file menu
 file_menu = tk.Menu(menu_bar, tearoff=0)
-file_menu.add_command(label="Open File")
+file_menu.add_command(label='Print', command=const.vcl)
 file_menu.add_separator()
 file_menu.add_command(label="Save File")
 file_menu.add_separator()

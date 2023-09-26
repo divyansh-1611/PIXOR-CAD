@@ -37,38 +37,11 @@ def intersection(cline1, cline2):
     else:
         return None
 
-
-def line_circ_inters(x1, y1, x2, y2, xc, yc, r):
-    '''Return list of intersection pts of line defined by pts x1,y1 and x2,y2
-    and circle (cntr xc,yc and radius r). Uses algorithm from Paul Bourke's web page.'''
-    intpnts = []
-    num = (xc - x1)*(x2 - x1) + (yc - y1)*(y2 - y1)
-    denom = (x2 - x1)*(x2 - x1) + (y2 - y1)*(y2 - y1)
-    if denom == 0:
-        return
-    u = num / denom
-    xp = x1 + u*(x2-x1)
-    yp = y1 + u*(y2-y1)
-
-    a = (x2 - x1)**2 + (y2 - y1)**2
-    b = 2*((x2-x1)*(x1-xc) + (y2-y1)*(y1-yc))
-    c = xc**2+yc**2+x1**2+y1**2-2*(xc*x1+yc*y1)-r**2
-    q = b**2 - 4*a*c
-    if q == 0:
-        intpnts.append((xp, yp))
-    elif q:
-        u1 = (-b+math.sqrt(abs(q)))/(2*a)
-        u2 = (-b-math.sqrt(abs(q)))/(2*a)
-        intpnts.append(((x1 + u1*(x2-x1)), (y1 + u1*(y2-y1))))
-        intpnts.append(((x1 + u2*(x2-x1)), (y1 + u2*(y2-y1))))
-    return intpnts
-
 def p2p_dist(p1, p2):
     """Return the distance between two points"""
     x, y = p1
     u, v = p2
     return math.sqrt((x-u)**2 + (y-v)**2)
-
 
 def same_pt_p(p1, p2):
     '''Return True if p1 and p2 are within 1e-10 of each other.'''
@@ -389,46 +362,6 @@ def cline_gen(self, cline, rubber=0, regen=False):
             self.cline_gen(newline)
 
     
-    def perpcl(self, pnt=None):
-        """Create a perpendicular cline through a selected point."""
-        
-        if not self.obj_stack:
-            self.updateMessageBar('Pick line to be perpendicular to')
-            self.set_sel_mode('items')
-        else:
-            message = 'Select point for perpendicular construction'
-            message += self.shift_key_advice
-            self.updateMessageBar(message)
-            self.set_sel_mode('pnt')
-            obj = self.obj_stack[0]
-            if not obj:
-                return
-            item = obj[0]
-            baseline = (0,0,0)
-            if self.canvas.type(item) == 'line':
-                if 'c' in self.canvas.gettags(item):
-                    baseline = self.curr[item].coords
-                elif 'g' in self.canvas.gettags(item):
-                    p1, p2 = self.curr[item].coords
-                    baseline = cnvrt_2pts_to_coef(p1, p2)
-            if self.pt_stack:
-                p = self.pt_stack.pop()
-                newline = perp_line(baseline, p)
-                self.cline_gen(newline)
-                self.obj_stack.pop()
-            elif pnt:
-                p = self.cp2ep(pnt)
-                newline = perp_line(baseline, p)
-                self.cline_gen(newline, rubber=1)
-
-    def ccirc_gen(self, cc, tag='c'):
-        """Create constr circle from a CC object. Save to self.curr."""
-
-        coords, color = cc.get_attribs()
-        handle = self.circ_draw(coords, color, tag=tag)
-        self.curr[handle] = cc
-        self.canvas.tag_lower(handle)
-
     def ccirc(self, p1=None):
         '''Create a construction circle from center point and
         perimeter point or radius.'''
@@ -571,6 +504,29 @@ class Draw(main.app_ui):
     of the calculator. Also, if an operation is prompting the user to enter a
     float value, the buttons to the left of the calculator registers will send
     the associated value to the CAD operation."""
+    #-----------------------------------------------------------------------
+    #GUI FUNCTIONS
+    #-----------------------------------------------------------------------
+
+    def createBase(self):
+
+        self.toolbar = self.createcomponent('toolbar', (), None,
+                  Frame, (self.interior(),), background="gray80")
+        self.toolbar.pack(fill=X)
+
+        self.canvas.pack(side=LEFT, expand=YES, fill=BOTH)
+        self.canvas.panbindings()
+        Widget.bind(self.canvas, "<Motion>", self.mouseMove)
+        Widget.bind(self.canvas, "<Button-1>", self.lftClick)
+        Widget.bind(self.canvas, "<Button-2>", self.midClick)
+        Widget.bind(self.canvas, "<Button-3>", self.rgtClick)
+        self.root.bind("<Control-z>", self.undo)
+        self.root.bind("<Control-y>", self.redo)
+        self.root.bind("<Key>", self.setCC)
+        self.root.bind("<KeyRelease>", self.setCC)
+        self.root.bind("<Control-B1-ButtonRelease>", self.regen_all_cl)
+        self.root.bind("<Control-B3-ButtonRelease>", self.regen)
+
     #=======================================================================
     # Functions for converting between canvas CS and engineering CS
     #=======================================================================
@@ -817,8 +773,6 @@ class Draw(main.app_ui):
                   Frame, (self.interior(),), background="gray80")
         self.toolbar.pack(fill=X)
 
-        self.canvas = self.createcomponent('canvas', (), None,
-                  Zooming, (self.interior(),), background="black")
         self.canvas.pack(side=LEFT, expand=YES, fill=BOTH)
         self.canvas.panbindings()
         self.canvas.zoombindings()
@@ -834,11 +788,13 @@ class Draw(main.app_ui):
         self.root.bind("<Control-B3-ButtonRelease>", self.regen)
 
     def createMenus(self):
-        self.menuBar.deletemenuitems('File', 0)
-        self.menuBar.addmenuitem('File', 'command', 'Print drawing',
-                                 label='Print', command=self.printps)
-        self.menuBar.addmenuitem('File', 'command', 'Open drawing',
-                                 label='Open...', command=self.fileOpen)
+        self.menuBar.deletemenuitems('Construction Line', 0)
+        self.menuBar.addmenuitem('Construction Line', 'command', 'Horizontal Line',
+                                 label='Print', command=self.hcl)
+        self.menuBar.addmenuitem('Construction Line', 'command', 'Vertical Line',
+                                 label='Print', command=self.vcl)
+        self.menuBar.addmenuitem('File', 'command', 'open drawing',
+                                 label='Save', command=self.fileOpen)
         self.menuBar.addmenuitem('File', 'command', 'Save drawing',
                                  label='Save', command=self.fileSave)
         self.menuBar.addmenuitem('File', 'command', 'Save drawing',
@@ -855,94 +811,7 @@ class Draw(main.app_ui):
                                  label='Undo (Ctrl+Z)', command=self.undo)
         self.menuBar.addmenuitem('Edit', 'command', 'Redo',
                                  label='Redo (Ctrl+Y)', command=self.redo)
-        self.menuBar.addmenuitem('Edit', 'command', 'Clear Redo',
-                                 label='Clr Redo', command=self.clear_redo)
-        self.menuBar.addmenuitem('Edit', 'command', 'Clear Undo',
-                                 label='Clr Undo', command=self.clear_undo)
-        self.menuBar.addmenu('View', 'View commands')
-        self.menuBar.addmenuitem('View', 'command', 'Fit geometry to screen',
-                                 label='Fit', command=self.view_fit)
-        self.menuBar.addmenu('Units', 'Switch units')
-        self.menuBar.addmenuitem('Units', 'command', 'Set units=mm',
-                                 label='mm',
-                                 command=lambda k='mm': self.set_units(k))
-        self.menuBar.addmenuitem('Units', 'command', 'Set units=cm',
-                                 label='cm',
-                                 command=lambda k='cm': self.set_units(k))
-        self.menuBar.addmenuitem('Units', 'command', 'Set units=inches',
-                                 label='inches',
-                                 command=lambda k='inches': self.set_units(k))
-        self.menuBar.addmenuitem('Units', 'command', 'Set units=feet',
-                                 label='feet',
-                                 command=lambda k='feet': self.set_units(k))
-        self.menuBar.addmenu('Measure', 'Measure')
-        self.menuBar.addmenuitem('Measure', 'command', 'measure distance',
-                                 label='pt-pt distance', command=self.meas_dist)
-        self.menuBar.addmenuitem('Measure', 'command', 'print item coords',
-                                 label='item coords',
-                                 command=lambda k='itemcoords':self.dispatch(k))
-        self.menuBar.addmenuitem('Measure', 'command', 'print item length',
-                                 label='item length',
-                                 command=lambda k='itemlength':self.dispatch(k))
-        self.menuBar.addmenuitem('Measure', 'command', 'launch calculator',
-                                 label='calculator',
-                                 command=self.launch_calc)
-        self.menuBar.addmenu('Dimension', 'Dimensions')
-        self.menuBar.addmenuitem('Dimension', 'command', 'Horizontal dimension',
-                                 label='Dim Horizontal',
-                                 command=lambda k='dim_h':self.dispatch(k))
-        self.menuBar.addmenuitem('Dimension', 'command', 'Vertical dimension',
-                                 label='Dim Vertical',
-                                 command=lambda k='dim_v':self.dispatch(k))
-        self.menuBar.addmenuitem('Dimension', 'command', 'Parallel dimension',
-                                 label='Dim Parallel',
-                                 command=lambda k='dim_par':self.dispatch(k))
-        self.menuBar.addmenu('Text', 'Text')
-        self.menuBar.addmenuitem('Text', 'command', 'Enter text',
-                                 label='Create text',
-                                 command=lambda k='text_enter':self.dispatch(k))
-        self.menuBar.addmenuitem('Text', 'command', 'Move text',
-                                 label='Move text',
-                                 command=lambda k='text_move':self.dispatch(k))
-        self.menuBar.addmenuitem('Text', 'command', 'Edit Text',
-                                 label='Edit text',
-                                 command=self.txt_params)
-        self.menuBar.addmenu('Delete', 'Delete drawing elements')
-        self.menuBar.addmenuitem('Delete', 'command',
-                                 'Delete individual element',
-                                 label='Del Element',
-                                 command=lambda k='del_el':self.dispatch(k))
-        self.menuBar.addmenuitem('Delete', 'separator')
-        self.menuBar.addmenuitem('Delete', 'command', 'Delete all construct',
-                                 label='All Cons', command=self.del_all_c)
-        self.menuBar.addmenuitem('Delete', 'command', 'Delete all geometry',
-                                 label='All Geom', command=self.del_all_g)
-        self.menuBar.addmenuitem('Delete', 'command', 'Delete all dimensions',
-                                 label='All Dims', command=self.del_all_d)
-        self.menuBar.addmenuitem('Delete', 'command', 'Delete all text',
-                                 label='All Text', command=self.del_all_t)
-        self.menuBar.addmenuitem('Delete', 'separator')
-        self.menuBar.addmenuitem('Delete', 'command', 'Delete all',
-                                 label='Delete All', command=self.del_all)
-        self.menuBar.addmenu('Debug', 'Debug')
-        self.menuBar.addmenuitem('Debug', 'command', 'Show self.op',
-                                 label='Show self.op',
-                                 command=self.show_op)
-        self.menuBar.addmenuitem('Debug', 'command', 'Show Curr',
-                                 label='Show Curr',
-                                 command=lambda k='show_curr':self.dispatch(k))
-        self.menuBar.addmenuitem('Debug', 'command', 'Show Prev',
-                                 label='Show Prev',
-                                 command=lambda k='show_prev':self.dispatch(k))
-        self.menuBar.addmenuitem('Debug', 'command', 'Show Undo',
-                                 label='Show Undo',
-                                 command=lambda k='show_undo':self.dispatch(k))
-        self.menuBar.addmenuitem('Debug', 'command', 'Show Redo',
-                                 label='Show Redo',
-                                 command=lambda k='show_redo':self.dispatch(k))
-        self.menuBar.addmenuitem('Debug', 'command', 'Show ZoomScale',
-                                 label='Show Zoom Scale',
-                                 command=lambda k='show_zoomscale':self.dispatch(k))
+
         
     def dispatch(self, key):
         """Dispatch commands initiated by menubar & toolbar buttons."""
