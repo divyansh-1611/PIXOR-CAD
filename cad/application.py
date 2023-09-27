@@ -451,19 +451,23 @@ class Application(QMainWindow):
         action.triggered.connect(self.disableActionHandler)
         return action
 
+    # Handler for the "Disable" action
     def disableActionHandler(self):
         for action in self.toolBarGroup.actions():
             action.setChecked(False)
 
         self.toolBarGroup.actions()[0].setChecked(True)
 
+    # Initialize the status bar
     def initStatusBar(self):
         self.statusBar().showMessage('Ready')
 
+    # Initialize the application window geometry
     def initGeometry(self):
         desktop = QDesktopWidget()
         self.setGeometry(desktop.availableGeometry())
 
+    # Show the open file dialog
     def showOpenDialog(self):
         ext = '*.json'
         title = 'Open from'
@@ -476,6 +480,7 @@ class Application(QMainWindow):
             with open(files[0], 'r') as fp:
                 fp.read()
 
+    # Show the save file dialog
     def showSaveDialog(self):
         ext = '*.json'
         title = 'Save as'
@@ -484,6 +489,7 @@ class Application(QMainWindow):
         options |= QFileDialog.ReadOnly
         files = QFileDialog().getSaveFileName(self, title, default, ext, options=options)
 
+    # Show the save file as dialog (not implemented)
     def showSaveasDialog(self):
         title = "Save as"
         default = "/home/cad.json"
@@ -495,12 +501,14 @@ class Application(QMainWindow):
             with open(files[0], 'w') as fp:
                 fp.write('')
 
+    # Handle key press events
     def keyPressEvent(self, event):
         self.sketch.keyPressEvent(event)
 
         if event.key() == Qt.Key_Escape:
             return self.disableActionHandler()
 
+    # Handle close events
     def closeEvent(self, event):
         title = 'Close application'
         question = 'Are you sure you want to quit?'
