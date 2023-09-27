@@ -231,21 +231,21 @@ class Application(QMainWindow):
         action.triggered.connect(self.showSaveDialog)
         return action
 
-
+    # Define and configure the "Import" action (not implemented)
     def importAction(self):
         action = QAction('Import', self.menu)
         action.setToolTip('Import')
         action.setStatusTip('Import')
         return action
 
-
+    # Define and configure the "Share" action (not implemented)
     def shareAction(self):
         action = QAction('Share',self.menu)
         action.setToolTip('Share')
         action.setStatusTip('Share')
         return action
 
-
+    # Define and configure the "Open" action
     def openAction(self):
         action = QAction('Open', self.menu)
         action.setShortcut('Ctrl+O')
@@ -254,7 +254,7 @@ class Application(QMainWindow):
         action.triggered.connect(self.showOpenDialog)
         return action
 
-
+    # Initialize the tool bar and its actions
     def initToolBar(self):
         self.toolBar = self.addToolBar('Drawing')
         self.toolBarGroup = QActionGroup(self.toolBar)
@@ -283,6 +283,7 @@ class Application(QMainWindow):
 
         default.setChecked(True)
 
+    # Define and configure the "Point" action
     def pointAction(self):
         action = QAction('Point')
         action.setShortcut('Ctrl+P')
@@ -291,10 +292,12 @@ class Application(QMainWindow):
         action.setIcon(QIcon(icon_path('point.png')))
         action.triggered.connect(self.pointActionHandler)
         return action
-
+    
+    # Handler for the "Point" action
     def pointActionHandler(self):
         self.sketch.handler = PointDrawing()
 
+    # Define and configure the "Line" action
     def lineAction(self):
         action = QAction('Line')
         action.setShortcut('Ctrl+L')
@@ -304,9 +307,11 @@ class Application(QMainWindow):
         action.triggered.connect(self.lineActionHandler)
         return action
 
+    # Handler for the "Line" action
     def lineActionHandler(self):
         self.sketch.handler = LineDrawing()
 
+    # Define and configure the "Horizontal" action
     def horizontalAction(self):
         action = QAction('Horizontal')
         action.setToolTip('Horizontal constraint')
@@ -315,9 +320,11 @@ class Application(QMainWindow):
         action.triggered.connect(self.horizontalActionHandler)
         return action
 
+    # Handler for the "Horizontal" action
     def horizontalActionHandler(self):
         self.sketch.handler = HorizontalHandler()
 
+    # Define and configure the "Vertical" action
     def verticalAction(self):
         action = QAction('Vertical')
         action.setToolTip('Vertical constraint')
@@ -326,9 +333,11 @@ class Application(QMainWindow):
         action.triggered.connect(self.verticalActionHandler)
         return action
 
+    # Handler for the "Vertical" action
     def verticalActionHandler(self):
         self.sketch.handler = VerticalHandler()
 
+    # Define and configure the "Angle" action
     def angleAction(self):
         action = QAction('Angle')
         action.setToolTip('Angle constraint')
@@ -337,8 +346,9 @@ class Application(QMainWindow):
         action.triggered.connect(self.angleActionHandler)
         return action
 
+    # Handler for the "Angle" action
     def angleActionHandler(self):
-
+        # Function to ask for angle value
         def askAngleValue():
             label = 'Input angle value:'
             title = 'Set angle constraint'
@@ -348,6 +358,7 @@ class Application(QMainWindow):
         if ok:
             self.sketch.handler = AngleHandler(angle)
 
+    # Define and configure the "Length" action
     def lengthAction(self):
         action = QAction('Length')
         action.setToolTip('Length constraint')
@@ -356,8 +367,9 @@ class Application(QMainWindow):
         action.triggered.connect(self.lengthActionHandler)
         return action
 
+    # Handler for the "Length" action
     def lengthActionHandler(self):
-
+        # Function to ask for length value
         def askLengthValue():
             label = 'Input length value:'
             title = 'Set length constraint'
@@ -367,6 +379,7 @@ class Application(QMainWindow):
         if ok:
             self.sketch.handler = LengthHandler(length)
 
+    # Define and configure the "Parallel" action
     def parallelAction(self):
         action = QAction('Parallel')
         action.setToolTip('Parallel constraint')
@@ -374,10 +387,12 @@ class Application(QMainWindow):
         action.setIcon(QIcon(icon_path('parallel.png')))
         action.triggered.connect(self.parallelsActionHandler)
         return action
-
+    
+    # Handler for the "Parallel" action
     def parallelsActionHandler(self):
         self.sketch.handler = ParallelHandler()
 
+    # Define and configure the "Perpendicular" action (not implemented)
     def perpendicularAction(self):
         action = QAction('Perpendicular')
         action.setToolTip('Perpendicular constraint')
@@ -386,9 +401,11 @@ class Application(QMainWindow):
         action.triggered.connect(self.perpendicularActionHandler)
         return action
 
+    # Handler for the "Perpendicular" action (not implemented)
     def perpendicularActionHandler(self):
         pass
 
+    # Define and configure the "Coincident" action
     def coincidentAction(self):
         action = QAction('Coincident')
         action.setToolTip('Coincident constraint')
@@ -397,9 +414,11 @@ class Application(QMainWindow):
         action.triggered.connect(self.coincidentActionHandler)
         return action
 
+    # Handler for the "Coincident" action
     def coincidentActionHandler(self):
         self.sketch.handler = CoincidentHandler()
 
+    # Define and configure the "Fixed" action
     def fixedAction(self):
         action = QAction('Fixed')
         action.setToolTip('Fixed constraint')
@@ -408,8 +427,10 @@ class Application(QMainWindow):
         action.triggered.connect(self.fixedActionHandler)
         return action
 
+    # Handler for the "Fixed" action
     def fixedActionHandler(self):
 
+        # Function to ask for coordinate values
         def askCoordinateValue():
             label = 'Enter coordinate:'
             title = 'Set fixing constraint'
@@ -421,6 +442,7 @@ class Application(QMainWindow):
             if ok:
                 self.sketch.handler = FixingHandler(x, y)
 
+    # Define and configure the "Disable" action
     def disableAction(self):
         action = QAction('Disable')
         action.setToolTip('Choose action')
