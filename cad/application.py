@@ -369,7 +369,9 @@ class Application(QMainWindow):
         ext = '*.json'
         title = 'Open from'
         default = '/home/cad.json'
-        files = QFileDialog().getOpenFileName(self, title, default, ext, options=0)
+        options = QFileDialog.Options() 
+        options |= QFileDialog.ReadOnly
+        files = QFileDialog().getOpenFileName(self, title, default, ext, options=options)
 
         if files and files[0]:
             with open(files[0], 'r') as fp:
