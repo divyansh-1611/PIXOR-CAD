@@ -19,7 +19,7 @@ class Sketch(QtWidgets.QWidget):
         self.system = System(self)
 
         self.setMouseTracking(True)
-        self.setWindowTitle('Sketch')
+        self.setWindowTitle('PIXOR-Cad')
 
     def addLine(self, line: Line):
         self.lines.append(line)

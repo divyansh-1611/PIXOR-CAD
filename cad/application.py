@@ -31,7 +31,7 @@ class Application(QMainWindow):
         self.initStatusBar()
         self.initGeometry()
 
-        self.setWindowTitle('Sketch')
+        self.setWindowTitle('PIXOR-Cad')
 
     def initSketch(self):
         self.sketch = Sketch(self)
