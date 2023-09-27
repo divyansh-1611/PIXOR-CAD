@@ -7,13 +7,14 @@ from PyQt5.QtWidgets import *
 from cad.sketch import Sketch
 from cad.solver import *
 
+# get the directory of the current file
 directory = os.path.dirname(__file__)
 
-
+# Function to get the path of an icon file
 def icon_path(name: str) -> str:
     return os.path.join(directory, 'icons', name)
 
-
+# Main application class
 class Application(QMainWindow):
 
     def __init__(self, *args):
@@ -26,20 +27,29 @@ class Application(QMainWindow):
         self.toolBarGroup = None
 
         self.initSketch()
+        # Initialize the sketch area
         self.initMenuBar()
+        # Initialize the menu bar
         self.initToolBar()
+        # Initialize the tool bar
         self.initStatusBar()
+        # Initialize the status bar
         self.initGeometry()
+        # Initialize the application window geometry 
 
         self.setWindowTitle('PIXOR-Cad')
+        # Set the window title
 
+    # Initialize the sketch area
     def initSketch(self):
         self.sketch = Sketch(self)
         self.setCentralWidget(self.sketch)
 
+    # Initialize the menu bar
     def initMenuBar(self):
         self.menu = self.menuBar()
 
+        # File menu
         file = self.menu.addMenu('File')
         file.addAction(self.exitAction())
         file.addAction(self.openAction())
@@ -49,6 +59,7 @@ class Application(QMainWindow):
         file.addAction(self.shareAction())
         file.addAction(self.print())
 
+        # Edit menu
         edit = self.menu.addMenu('Edit')
         edit.addAction(self.undoAction())
         edit.addAction(self.RedoAction())
@@ -58,19 +69,23 @@ class Application(QMainWindow):
         edit.addAction(self.copyAction())
         edit.addAction(self.pasteAction())
 
+        # View menu
         view = self.menu.addMenu("View")
         view.addAction(self.CreateShortcuts())
         view.addAction(self.ChangeContrast())
         view.addAction(self.zoomi())
         view.addAction(self.zoomo())
 
+        # Help menu
         help = self.menu.addMenu("Help")
         help.addAction(self.aboutus())
         help.addAction(self.VersionDetails())
 
+        # Report bugs menu
         report_bugs = self.menu.addMenu("Report Bugs")
         report_bugs.addAction(self.report())
 
+    # Define and configure the "Undo" action
     def undoAction(self):
         action = QAction('Undo', self.menu)
         action.setShortcut('Ctrl+Z')
@@ -78,6 +93,7 @@ class Application(QMainWindow):
         action.setToolTip('Undo')
         return action
     
+    # Define and configure the "Redo" action
     def RedoAction(self):
         action = QAction("Redo", self.menu)
         action.setStatusTip("Redo")
@@ -85,6 +101,7 @@ class Application(QMainWindow):
         action.setShortcut("Ctrl+Y")    
         return action
     
+    # Define and configure the "Clear Undo" action
     def ClrundoAction(self):
         action = QAction('Clear Undo', self)
         action.setShortcut('Ctrl+Shift+Z')
@@ -92,6 +109,7 @@ class Application(QMainWindow):
         action.setToolTip('Clear Undo')
         return action
 
+    # Define and configure the "Clear Redo" action
     def Clrredoaction(self):
         action = QAction('Clear Redo', self)
         action.setShortcut('Ctrl+Shift+Y')
@@ -99,6 +117,7 @@ class Application(QMainWindow):
         action.setToolTip('Clear Redo')
         return action
 
+    # Define and configure the "Create Shortcuts" action
     def CreateShortcuts(self):
         action = QAction('Create Shortcuts', self)
         action.setStatusTip('Create Shortcuts')
