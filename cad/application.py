@@ -471,6 +471,48 @@ class Application(QMainWindow):
         self.sketch.handler = drawRectangleHandler()
     '''
 
+     # Define and configure the "Arc with two points" action
+    def drawArcwithtwopointsAction(self):
+        action = QAction('drawArcwithtwopoints')
+        action.setToolTip('drawArcwithtwopoints constraint')
+        action.setStatusTip('drawArcwithtwopoints constraint')
+        action.setIcon(QIcon(icon_path('Arc.png')))
+        # action.triggered.connect(self.drawArcwithtwopointsActionHandler)
+        return action
+  
+    ''' # Handler for the "drawArcwithtwopoints" action
+    def drawArcwithtwopointsHandler(self):
+        self.sketch.handler = drawArcwithtwopointsHandler()
+    '''
+
+     # Define and configure the "Eraser" action
+    def EraserAction(self):
+        action = QAction('Eraser')
+        action.setToolTip('Eraser constraint')
+        action.setStatusTip('Eraser constraint')
+        action.setIcon(QIcon(icon_path('Eraser.png')))
+        # action.triggered.connect(self.EraserActionHandler)
+        return action
+  
+    ''' # Handler for the "Eraser" action
+    def EraserHandler(self):
+        self.sketch.handler = EraserHandler()
+    '''
+
+     # Define and configure the "Type Text" action
+    def typeTextAction(self):
+        action = QAction('typeText')
+        action.setToolTip('typeText constraint')
+        action.setStatusTip('typeText constraint')
+        action.setIcon(QIcon(icon_path('Type.png')))
+        # action.triggered.connect(self.EraserActionHandler)
+        return action
+  
+    ''' # Handler for the "typeText" action
+    def typeTextHandler(self):
+        self.sketch.handler = typeTextHandler()
+    '''
+
     # Define and configure the "Disable" action
     def disableAction(self):
         action = QAction('Disable')
