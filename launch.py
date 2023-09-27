@@ -2,7 +2,6 @@
 
 import sys
 from PyQt5.QtWidgets import QApplication
-
 from cad.application import Application
 
 
