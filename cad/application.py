@@ -273,6 +273,7 @@ class Application(QMainWindow):
             self.fixedAction(),
             self.angleAction(),
             self.lengthAction(),
+            self.polylineAction(),
         ]
 
         for action in actions:
@@ -448,13 +449,13 @@ class Application(QMainWindow):
         action.setToolTip('Polyline constraint')
         action.setStatusTip('Polyline constraint')
         action.setIcon(QIcon(icon_path('polyline.png')))
-        action.triggered.connect(self.polylineActionHandler)
+        #action.triggered.connect(self.polylineActionHandler)
         return action
-'''   
-    # Handler for the "Polyline" action
+  
+    ''' # Handler for the "Polyline" action
     def polylineActionHandler(self):
         self.sketch.handler = PolylineHandler()
-'''
+    '''
     # Define and configure the "Disable" action
     def disableAction(self):
         action = QAction('Disable')
