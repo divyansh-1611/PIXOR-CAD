@@ -104,6 +104,7 @@ class Application(QMainWindow):
 
     def saveasAction(self):
         action = QAction("Save as", self)
+        action.setShortcut('Ctrl+Shift+S')
         action.setStatusTip("Save as")
         action.setToolTip("Save as")
         return action
@@ -162,7 +163,7 @@ class Application(QMainWindow):
         return action
 
     def saveAction(self):
-        action = QAction('Save As', self.menu)
+        action = QAction('Save', self.menu)
         action.setShortcut('Ctrl+S')
         action.setToolTip('Save current application')
         action.setStatusTip('Save current application')
@@ -378,7 +379,16 @@ class Application(QMainWindow):
         ext = '*.json'
         title = 'Save as'
         default = '/home/cad.json'
-        files = QFileDialog().getSaveFileName(self, title, default, ext, options=0)
+        options = QFileDialog.Options() 
+        options |= QFileDialog.ReadOnly
+        files = QFileDialog().getSaveFileName(self, title, default, ext, options=options)
+
+    def showSaveasDialog(self):
+        title = "Save as"
+        default = "/home/cad.json"
+        options = QFileDialog.Options()
+        options |= QFileDialog.ReadOnly
+        files= QFileDialog().getSaveFileName(self, 'Save File', '', 'JPEG (*.JPEG);;All Files (*)', options=options)
 
         if files and files[0]:
             with open(files[0], 'w') as fp:
