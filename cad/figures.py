@@ -1,4 +1,4 @@
-from PyQt5.QtCore import QPointF, QLineF
+from PyQt5.QtCore import QPointF, QLineF, QRect
 
 
 class Point:
@@ -46,6 +46,16 @@ class Circle:
     def __init__(self, center, radius):
         self.center = center
         self.radius = radius
+
+    def toQtRect(self):
+        # Calculate integer coordinates for the rectangle
+        x = int(self.center.x - self.radius)
+        y = int(self.center.y - self.radius)
+        width = int(2 * self.radius)
+        height = int(2 * self.radius)
+
+        # Create and return a QRect object
+        return QRect(x, y, width, height)
 class Line:
     def __init__(self, p1: Point, p2: Point):
         self.p1 = p1

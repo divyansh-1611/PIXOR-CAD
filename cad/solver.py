@@ -3,6 +3,7 @@ from abc import abstractmethod
 import numpy as np
 from scipy.optimize import fsolve
 
+from cad import pen
 from cad.figures import *
 
 
@@ -339,40 +340,32 @@ class HorizontalLineHandler(Handler):
             self.p1 = None
 
 class CircleDrawingHandler(Handler):
+
     def __init__(self):
-        self.points = []
+        self.center = None
+        self.radius = None
 
     def mousePressed(self, sketch):
-        point = sketch.getPressedPosition()
-        self.points.append(point)
+        if not self.center:
+            self.center = sketch.getPressedPosition()
 
-        if len(self.points) == 3:
-            # Calculate the center and radius of the circle
-            center, radius = calculate_circle_parameters(self.points)
-
-            # Create a circle and add it to the sketch
-            circle = Circle(center, radius)
-            sketch.addCircle(circle)
-
-            # Clear the points list for the next circle
-            self.points = []
+    def mouseReleased(self, sketch):
+        if self.center:
+            radius = self.center.distToPoint(sketch.getCurrentPosition())
+            sketch.addCircle(Circle(self.center, radius))
             sketch.update()
+            self.center = None
 
     def mouseMoved(self, sketch):
-        if len(self.points) == 2:
-            # Update the second point as the mouse moves
-            self.points[-1] = sketch.getCurrentPosition()
+        if self.center:
+            self.radius = self.center.distToPoint(sketch.getCurrentPosition())
+            sketch.update()
 
-def calculate_circle_parameters(points):
-    # Calculate the center of the circle as the intersection of two perpendicular bisectors
-    bisector1 = Line(points[0], points[1]).perpendicular_bisector()
-    bisector2 = Line(points[1], points[2]).perpendicular_bisector()
-    center = bisector1.intersection(bisector2)
+    def draw(self, painter):
+        if self.center and self.radius:
+            painter.setPen(pen.activeLine)
+            painter.drawEllipse(self.center.toQtPoint(), self.radius, self.radius)
 
-    # Calculate the radius as the distance from the center to any of the points
-    radius = center.distance_to(points[0])
-
-    return center, radius
 class Vertical(Constraint, Handler):
 
     def __init__(self, line: Line):
