@@ -274,6 +274,10 @@ class Application(QMainWindow):
             self.angleAction(),
             self.lengthAction(),
             self.polylineAction(),
+            self.drawRectangleAction(),
+            self.drawArcwithtwopointsAction(),
+            self.EraserAction(),
+            self.typeTextAction(),
         ]
 
         for action in actions:
