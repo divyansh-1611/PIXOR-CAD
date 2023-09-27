@@ -45,12 +45,18 @@ class Application(QMainWindow):
         file.addAction(self.openAction())
         file.addAction(self.saveAction())
         file.addAction(self.saveasAction())
+        file.addAction(self.importAction())
+        file.addAction(self.shareAction())
+        file.addAction(self.print())
 
         edit = self.menu.addMenu('Edit')
         edit.addAction(self.undoAction())
         edit.addAction(self.RedoAction())
         edit.addAction(self.ClrundoAction())
         edit.addAction(self.Clrredoaction())
+        edit.addAction(self.cutAction())
+        edit.addAction(self.copyAction())
+        edit.addAction(self.pasteAction())
 
         view = self.menu.addMenu("View")
         view.addAction(self.CreateShortcuts())
@@ -61,6 +67,9 @@ class Application(QMainWindow):
         help = self.menu.addMenu("Help")
         help.addAction(self.aboutus())
         help.addAction(self.VersionDetails())
+
+        report_bugs = self.menu.addMenu("Report Bugs")
+        report_bugs.addAction(self.report())
 
     def undoAction(self):
         action = QAction('Undo', self.menu)
@@ -132,6 +141,25 @@ class Application(QMainWindow):
         action.setStatusTip('Version Details')
         action.setToolTip('Version Details')
         return action
+
+    def print(self):
+        action = QAction('Print', self)
+        action.setStatusTip('Print')
+        action.setToolTip('Print')
+        return action
+
+    def report(self):
+        action = QAction('Report', self)
+        action.setStatusTip('Report')
+        action.setToolTip('About Us')
+        return action
+
+    def cutAction(self):
+        action = QAction('Cut', self.menu)
+        action.setShortcut('Ctrl+X')
+        action.setStatusTip('Cut')
+        action.setToolTip('Cut')
+        return action
     
     def copyAction(self):
         action = QAction('Copy', self.menu)
@@ -168,6 +196,18 @@ class Application(QMainWindow):
         action.setToolTip('Save current application')
         action.setStatusTip('Save current application')
         action.triggered.connect(self.showSaveDialog)
+        return action
+
+    def importAction(self):
+        action = QAction('Import', self.menu)
+        action.setToolTip('Import')
+        action.setStatusTip('Import')
+        return action
+
+    def shareAction(self):
+        action = QAction('Share',self.menu)
+        action.setToolTip('Share')
+        action.setStatusTip('Share')
         return action
 
     def openAction(self):
