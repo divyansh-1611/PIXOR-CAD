@@ -411,6 +411,41 @@ class Horizontal(Constraint):
 
         y[n] = x[i2] - x[i1]
 
+class EraserHandler(Handler):
+    def __init__(self):
+        super().__init__()
+
+    def mousePressed(self, sketch):
+        self.sketch = sketch
+        self.eraseObject()
+
+    def eraseObject(self):
+        active_line = self.getActiveLine()
+        active_point = self.getActivePoint()
+
+        if active_line:
+            self.sketch.lines.remove(active_line)
+        elif active_point:
+            if active_point in self.sketch.points:
+                self.sketch.points.remove(active_point)
+
+        self.sketch.update()
+
+    def getActiveLine(self):
+        for line in self.sketch.lines:
+            if line.hasPoint(self.sketch.currentPos, 4):
+                return line
+        return None
+
+    def getActivePoint(self):
+        for line in self.sketch.lines:
+            for point in line.points:
+                if point.distToPoint(self.sketch.currentPos) < 4:
+                    return point
+        for point in self.sketch.points:
+            if point.distToPoint(self.sketch.currentPos) < 4:
+                return point
+        return None
 
 class CoincidentHandler(Handler):
 

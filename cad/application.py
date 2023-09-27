@@ -494,15 +494,21 @@ class Application(QMainWindow):
         action.setToolTip('Eraser constraint')
         action.setStatusTip('Eraser constraint')
         action.setIcon(QIcon(icon_path('Eraser.png')))
-        # action.triggered.connect(self.EraserActionHandler)
+        action.triggered.connect(self.EraserActionHandler)
         return action
-  
-    ''' # Handler for the "Eraser" action
-    def EraserHandler(self):
-        self.sketch.handler = EraserHandler()
-    '''
 
-     # Define and configure the "Type Text" action
+    def toggleEraserMode(self):
+        eraserButton = self.toolBarGroup.checkedAction()
+        if eraserButton.text() == 'Eraser':
+            self.sketch.handler = EraserHandler(self.sketch)
+        else:
+            self.sketch.handler = DisableHandler()
+    # Handler for the "Eraser" action
+    def EraserActionHandler(self):
+        self.sketch.handler = EraserHandler()
+
+
+    # Define and configure the "Type Text" action
     def typeTextAction(self):
         action = QAction('typeText')
         action.setToolTip('typeText constraint')
