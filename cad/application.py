@@ -449,13 +449,28 @@ class Application(QMainWindow):
         action.setToolTip('Polyline constraint')
         action.setStatusTip('Polyline constraint')
         action.setIcon(QIcon(icon_path('polyline.png')))
-        #action.triggered.connect(self.polylineActionHandler)
+        # action.triggered.connect(self.polylineActionHandler)
         return action
   
     ''' # Handler for the "Polyline" action
     def polylineActionHandler(self):
         self.sketch.handler = PolylineHandler()
     '''
+
+     # Define and configure the "Rectangle" action
+    def drawRectangleAction(self):
+        action = QAction('drawRectangle')
+        action.setToolTip('drawRectangle constraint')
+        action.setStatusTip('drawRectangle constraint')
+        action.setIcon(QIcon(icon_path('rectangle.png')))
+        # action.triggered.connect(self.drawRectangleActionHandler)
+        return action
+  
+    ''' # Handler for the "drawRectangle" action
+    def drawRectangleActionHandler(self):
+        self.sketch.handler = drawRectangleHandler()
+    '''
+
     # Define and configure the "Disable" action
     def disableAction(self):
         action = QAction('Disable')
