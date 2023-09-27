@@ -124,12 +124,14 @@ class Application(QMainWindow):
         action.setToolTip('Create Shortcuts')
         return action
 
+    # Define and configure the "Change Contrast" action
     def ChangeContrast(self):
         action = QAction('Change Contrast', self)
         action.setStatusTip('Change Contrast')
         action.setToolTip('Change Contrast')
         return action
 
+    # Define and configure the "Save As" action
     def saveasAction(self):
         action = QAction("Save as", self)
         action.setShortcut('Ctrl+Shift+S')
@@ -137,42 +139,49 @@ class Application(QMainWindow):
         action.setToolTip("Save as")
         return action
     
+    # Define and configure the "Zoom In" action
     def zoomi(self):
         action = QAction('Zoom In', self)
         action.setStatusTip('Zoom In')
         action.setToolTip('Zoom In')
         return action
 
+    # Define and configure the "Zoom Out" action
     def zoomo(self):
         action = QAction('Zoom Out', self)
         action.setStatusTip('Zoom Out')
         action.setToolTip('Zoom Out')
         return action
 
+    # Define and configure the "About Us" action
     def aboutus(self):
         action = QAction('About Us', self)
         action.setStatusTip('About Us')
         action.setToolTip('About Us')
         return action
 
+    # Define and configure the "Version Details" action
     def VersionDetails(self):
         action = QAction('Version Details', self)
         action.setStatusTip('Version Details')
         action.setToolTip('Version Details')
         return action
 
+    # Define and configure the "Print" action
     def print(self):
         action = QAction('Print', self)
         action.setStatusTip('Print')
         action.setToolTip('Print')
         return action
 
+    # Define and configure the "Report" action
     def report(self):
         action = QAction('Report', self)
         action.setStatusTip('Report')
         action.setToolTip('About Us')
         return action
 
+    # Define and configure the "Cut" action
     def cutAction(self):
         action = QAction('Cut', self.menu)
         action.setShortcut('Ctrl+X')
@@ -180,6 +189,7 @@ class Application(QMainWindow):
         action.setToolTip('Cut')
         return action
     
+    # Define and configure the "Copy" action
     def copyAction(self):
         action = QAction('Copy', self.menu)
         action.setShortcut('Ctrl+C')
@@ -187,6 +197,7 @@ class Application(QMainWindow):
         action.setToolTip('Copy')
         return action
 
+    # Define and configure the "Paste" action
     def pasteAction(self):
         action = QAction('Paste', self.menu)
         action.setShortcut('Ctrl+V')
@@ -194,6 +205,7 @@ class Application(QMainWindow):
         action.setToolTip('Paste')
         return action
 
+    # Define and configure the "Delete" action (not implemented)
     def deleteAction(self):
         action = QAction('Delete', self.menu)
         action.setShortcut('Delete')
@@ -201,6 +213,7 @@ class Application(QMainWindow):
         action.setToolTip('Delete')
         return action
 
+    # Define and configure the "Exit" action
     def exitAction(self):
         action = QAction('Exit', self.menu)
         action.setShortcut('Ctrl+Q')
@@ -209,6 +222,7 @@ class Application(QMainWindow):
         action.triggered.connect(self.close)
         return action
 
+    # Define and configure the "Save" action
     def saveAction(self):
         action = QAction('Save', self.menu)
         action.setShortcut('Ctrl+S')
@@ -217,17 +231,20 @@ class Application(QMainWindow):
         action.triggered.connect(self.showSaveDialog)
         return action
 
+
     def importAction(self):
         action = QAction('Import', self.menu)
         action.setToolTip('Import')
         action.setStatusTip('Import')
         return action
 
+
     def shareAction(self):
         action = QAction('Share',self.menu)
         action.setToolTip('Share')
         action.setStatusTip('Share')
         return action
+
 
     def openAction(self):
         action = QAction('Open', self.menu)
@@ -236,6 +253,7 @@ class Application(QMainWindow):
         action.setStatusTip('Open file')
         action.triggered.connect(self.showOpenDialog)
         return action
+
 
     def initToolBar(self):
         self.toolBar = self.addToolBar('Drawing')
