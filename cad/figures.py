@@ -42,7 +42,10 @@ class Point:
         s = l.dy * self.x - l.dx * self.y + l.x2 * l.y1 - l.y2 * l.x1
         return abs(s) / l.length
 
-
+class Circle:
+    def __init__(self, center, radius):
+        self.center = center
+        self.radius = radius
 class Line:
     def __init__(self, p1: Point, p2: Point):
         self.p1 = p1

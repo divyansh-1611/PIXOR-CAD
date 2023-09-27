@@ -3,7 +3,7 @@ from abc import abstractmethod
 import numpy as np
 from scipy.optimize import fsolve
 
-from cad.figures import Point, Line
+from cad.figures import *
 
 
 class System(object):
@@ -297,6 +297,21 @@ class VerticalHandler(Handler):
             sketch.system.addConstraint(Vertical(line))
             sketch.update()
 
+class VerticalLineHandler(Handler):
+
+    def __init__(self):
+        self.p1 = None
+
+    def mousePressed(self, sketch):
+        if not self.p1:
+            self.p1 = sketch.getPressedPosition()
+
+    def mouseReleased(self, sketch):
+        if self.p1:
+            p2 = Point(self.p1.x, 0)  # Set the second point to the top of the canvas (y-coordinate 0)
+            sketch.addLine(Line(self.p1, p2))
+            sketch.update()
+            self.p1 = None
 
 class HorizontalHandler(Handler):
 
@@ -307,7 +322,57 @@ class HorizontalHandler(Handler):
             sketch.system.addConstraint(constraint)
             sketch.update()
 
+class HorizontalLineHandler(Handler):
 
+    def __init__(self):
+        self.p1 = None
+
+    def mousePressed(self, sketch):
+        if not self.p1:
+            self.p1 = sketch.getPressedPosition()
+
+    def mouseReleased(self, sketch):
+        if self.p1:
+            p2 = Point(sketch.width(), self.p1.y)  # Set the second point to the canvas width
+            sketch.addLine(Line(self.p1, p2))
+            sketch.update()
+            self.p1 = None
+
+class CircleDrawingHandler(Handler):
+    def __init__(self):
+        self.points = []
+
+    def mousePressed(self, sketch):
+        point = sketch.getPressedPosition()
+        self.points.append(point)
+
+        if len(self.points) == 3:
+            # Calculate the center and radius of the circle
+            center, radius = calculate_circle_parameters(self.points)
+
+            # Create a circle and add it to the sketch
+            circle = Circle(center, radius)
+            sketch.addCircle(circle)
+
+            # Clear the points list for the next circle
+            self.points = []
+            sketch.update()
+
+    def mouseMoved(self, sketch):
+        if len(self.points) == 2:
+            # Update the second point as the mouse moves
+            self.points[-1] = sketch.getCurrentPosition()
+
+def calculate_circle_parameters(points):
+    # Calculate the center of the circle as the intersection of two perpendicular bisectors
+    bisector1 = Line(points[0], points[1]).perpendicular_bisector()
+    bisector2 = Line(points[1], points[2]).perpendicular_bisector()
+    center = bisector1.intersection(bisector2)
+
+    # Calculate the radius as the distance from the center to any of the points
+    radius = center.distance_to(points[0])
+
+    return center, radius
 class Vertical(Constraint, Handler):
 
     def __init__(self, line: Line):

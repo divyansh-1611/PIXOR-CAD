@@ -274,7 +274,7 @@ class Application(QMainWindow):
             self.angleAction(),
             self.lengthAction(),
             self.polylineAction(),
-            self.drawRectangleAction(),
+            self.drawCircleAction(),
             self.drawArcwithtwopointsAction(),
             self.EraserAction(),
             self.typeTextAction(),
@@ -327,7 +327,7 @@ class Application(QMainWindow):
 
     # Handler for the "Horizontal" action
     def horizontalActionHandler(self):
-        self.sketch.handler = HorizontalHandler()
+        self.sketch.handler = HorizontalLineHandler()
 
     # Define and configure the "Vertical" action
     def verticalAction(self):
@@ -340,7 +340,7 @@ class Application(QMainWindow):
 
     # Handler for the "Vertical" action
     def verticalActionHandler(self):
-        self.sketch.handler = VerticalHandler()
+        self.sketch.handler = VerticalLineHandler()
 
     # Define and configure the "Angle" action
     def angleAction(self):
@@ -461,19 +461,18 @@ class Application(QMainWindow):
         self.sketch.handler = PolylineHandler()
     '''
 
-     # Define and configure the "Rectangle" action
-    def drawRectangleAction(self):
-        action = QAction('drawRectangle')
-        action.setToolTip('drawRectangle constraint')
-        action.setStatusTip('drawRectangle constraint')
-        action.setIcon(QIcon(icon_path('rectangle.png')))
-        # action.triggered.connect(self.drawRectangleActionHandler)
+     # Define and configure the "Circle" action
+    def drawCircleAction(self):
+        action = QAction('Draw Circle')
+        action.setToolTip('Draw Circle')
+        action.setStatusTip('Draw Circle')
+        action.setIcon(QIcon(icon_path('circle.png')))
+        action.triggered.connect(self.drawCircleActionHandler)
         return action
   
-    ''' # Handler for the "drawRectangle" action
-    def drawRectangleActionHandler(self):
-        self.sketch.handler = drawRectangleHandler()
-    '''
+    # Handler for the "drawCircle" action
+    def drawCircleActionHandler(self):
+        self.sketch.handler = CircleDrawingHandler()
 
      # Define and configure the "Arc with two points" action
     def drawArcwithtwopointsAction(self):
