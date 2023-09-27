@@ -103,6 +103,12 @@ class Application(QMainWindow):
         action.setToolTip('Change Contrast')
         return action
 
+    def saveasAction(self):
+        action = QAction("Save as", self)
+        action.setStatusTip("Save as")
+        action.setToolTip("Save as")
+        return action
+    
     def zoomi(self):
         action = QAction('Zoom In', self)
         action.setStatusTip('Zoom In')
