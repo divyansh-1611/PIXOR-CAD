@@ -39,7 +39,7 @@ This project aims to bring the power and precision of CAD to a wider audience, m
 The primary Programming language that this software would be built on is going to be python. The specifications and versions of the libraries that we’re going to use for building this software are specified below -   
 
 - Python Version 3.9.4 (https://www.python.org/downloads/release/python-394/) 
-- Tkinter nixpkgs stable build 22.11 version 3.10.11 
+- PYQT version 5.15.9
 - Seaborn Version 0.11.2 (as this software deals with more complex visuals, Seaborn is the most suitable library for visualizations. (https://pypi.org/project/seaborn/0.11.2/)) 
 - Scipy Version 1.5.2 (for dealing with complex coordinate related functions to ensure smooth experience while designing.) 
 - Pytest version 7.4.2 (https://pypi.org/project/pytest/) 
