@@ -45,7 +45,6 @@ class Application(QMainWindow):
         file.addAction(self.openAction())
         file.addAction(self.saveAction())
         file.addAction(self.saveasAction())
-        file.addAction(self.ImportDocAction())
 
         edit = self.menu.addMenu('Edit')
         edit.addAction(self.undoAction())
