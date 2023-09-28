@@ -431,21 +431,39 @@ class EraserHandler(Handler):
 
         self.sketch.update()
 
-    def getActiveLine(self):
-        for line in self.sketch.lines:
-            if line.hasPoint(self.sketch.currentPos, 4):
-                return line
-        return None
+class MoveObjectHandler(Handler):
+    def __init__(self):
+        self.selected_object = None
+        self.offset = Point(0, 0)
 
-    def getActivePoint(self):
-        for line in self.sketch.lines:
-            for point in line.points:
-                if point.distToPoint(self.sketch.currentPos) < 4:
-                    return point
-        for point in self.sketch.points:
-            if point.distToPoint(self.sketch.currentPos) < 4:
-                return point
-        return None
+    def mousePressed(self, sketch):
+        if not self.selected_object:
+            for line in sketch.lines:
+                if line.hasPoint(sketch.currentPos, 4):
+                    self.selected_object = line
+                    self.offset = Point(sketch.currentPos.x - line.p1.x, sketch.currentPos.y - line.p1.y)
+                    break
+            for point in sketch.points:
+                if point.distToPoint(sketch.currentPos) < 4:
+                    self.selected_object = point
+                    self.offset = Point(0, 0)
+                    break
+
+    def mouseReleased(self, sketch):
+        self.selected_object = None
+
+    def mouseMoved(self, sketch):
+        if self.selected_object:
+            new_pos = Point(sketch.currentPos.x - self.offset.x, sketch.currentPos.y - self.offset.y)
+            if isinstance(self.selected_object, Line):
+                delta_x = new_pos.x - self.selected_object.p1.x
+                delta_y = new_pos.y - self.selected_object.p1.y
+                self.selected_object.p1 = new_pos
+                self.selected_object.p2 = Point(self.selected_object.p2.x + delta_x, self.selected_object.p2.y + delta_y)
+            elif isinstance(self.selected_object, Point):
+                self.selected_object.x = new_pos.x
+                self.selected_object.y = new_pos.y
+            sketch.update()
 
 class CoincidentHandler(Handler):
 
