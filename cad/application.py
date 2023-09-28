@@ -266,7 +266,6 @@ class Application(QMainWindow):
             self.rectangleAction(),
             self.polylineAction(),
             self.drawCircleAction(),
-            self.drawArcwithtwopointsAction(),
             self.EraserAction(),
         ]
 
@@ -510,19 +509,6 @@ class Application(QMainWindow):
     def drawCircleActionHandler(self):
         self.sketch.handler = CircleDrawingHandler()
 
-     # Define and configure the "Arc with two points" action
-    def drawArcwithtwopointsAction(self):
-        action = QAction('drawArcwithtwopoints')
-        action.setToolTip('drawArcwithtwopoints constraint')
-        action.setStatusTip('drawArcwithtwopoints constraint')
-        action.setIcon(QIcon(icon_path('Arc.png')))
-        # action.triggered.connect(self.drawArcwithtwopointsActionHandler)
-        return action
-  
-    ''' # Handler for the "drawArcwithtwopoints" action
-    def drawArcwithtwopointsHandler(self):
-        self.sketch.handler = drawArcwithtwopointsHandler()
-    '''
 
     # Define and configure the "Eraser" action
     def EraserAction(self):
