@@ -413,25 +413,26 @@ class Horizontal(Constraint):
         y[n] = x[i2] - x[i1]
 
 class EraserHandler(Handler):
+
     def __init__(self):
-        super().__init__()
+        self.selected_object = None
+
+    def getActiveLine(self, sketch):
+        for line in sketch.lines:
+            if line.hasPoint(sketch.currentPos, 4):
+                return line
+        return None
 
     def mousePressed(self, sketch):
-        self.sketch = sketch
-        self.eraseObject()
+        self.selected_object = self.getActiveLine(sketch)
 
-    def eraseObject(self):
-        active_line = self.getActiveLine()
-        active_point = self.getActivePoint()
+    def mouseReleased(self, sketch):
+        if self.selected_object:
+            sketch.lines.remove(self.selected_object)
+            self.selected_object = None
 
-        if active_line:
-            self.sketch.lines.remove(active_line)
-        elif active_point:
-            if active_point in self.sketch.points:
-                self.sketch.points.remove(active_point)
-
-        self.sketch.update()
-
+    def mouseMoved(self, sketch):
+        pass  # Implement this if needed
 class MoveObjectHandler(Handler):
     def __init__(self):
         self.selected_object = None
