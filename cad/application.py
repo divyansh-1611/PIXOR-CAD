@@ -54,7 +54,6 @@ class Application(QMainWindow):
         # File menu
         file = self.menu.addMenu('File')
         file.addAction(self.exitAction())
-        file.addAction(self.openAction())
         file.addAction(self.saveImageAction())
         file.addAction(self.saveDxfAction())
         file.addAction(self.importAction())
@@ -240,14 +239,6 @@ class Application(QMainWindow):
         action.setStatusTip('Share')
         return action
 
-    # Define and configure the "Open" action
-    def openAction(self):
-        action = QAction('Open', self.menu)
-        action.setShortcut('Ctrl+O')
-        action.setToolTip('Open file')
-        action.setStatusTip('Open file')
-        action.triggered.connect(self.showOpenDialog)
-        return action
 
     # Initialize the tool bar and its actions
     def initToolBar(self):
@@ -567,19 +558,6 @@ class Application(QMainWindow):
     def initGeometry(self):
         desktop = QDesktopWidget()
         self.setGeometry(desktop.availableGeometry())
-
-    # Show the open file dialog
-    def showOpenDialog(self):
-        ext = '*.json'
-        title = 'Open from'
-        default = '/home/cad.json'
-        options = QFileDialog.Options() 
-        options |= QFileDialog.ReadOnly
-        files = QFileDialog().getOpenFileName(self, title, default, ext, options=options)
-
-        if files and files[0]:
-            with open(files[0], 'r') as fp:
-                fp.read()
 
     def importDxf(self):
         options = QFileDialog.Options()
