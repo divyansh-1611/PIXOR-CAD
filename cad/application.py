@@ -273,15 +273,12 @@ class Application(QMainWindow):
             self.fixedAction(),
             self.angleAction(),
             self.lengthAction(),
-<<<<<<< HEAD
             self.rectangleAction(),
-=======
             self.polylineAction(),
             self.drawCircleAction(),
             self.drawArcwithtwopointsAction(),
             self.EraserAction(),
             self.typeTextAction(),
->>>>>>> 4ef6459a879143572883369a5ca76937fc0774b8
         ]
 
         for action in actions:
@@ -396,23 +393,20 @@ class Application(QMainWindow):
         action.setIcon(QIcon(icon_path('parallel.png')))
         action.triggered.connect(self.parallelsActionHandler)
         return action
-<<<<<<< HEAD
 
     def rectangleAction(self):
         action = QAction('Rectangle')
         action.setToolTip('Rectangle constraint')
         action.setStatusTip('Rectangle constraint')
-        action.setIcon(QIcon(icon_path('rectangle.jpg')))
+        action.setIcon(QIcon(icon_path('rectangle.png')))
         action.triggered.connect(self.rectangleActionHandler)
         return action
 
     def rectangleActionHandler(self):
         self.sketch.handler = RectangleHandler()
 
-=======
     
     # Handler for the "Parallel" action
->>>>>>> 4ef6459a879143572883369a5ca76937fc0774b8
     def parallelsActionHandler(self):
         self.sketch.handler = ParallelHandler()
 
