@@ -331,11 +331,11 @@ class HorizontalLineHandler(Handler):
 
     def mousePressed(self, sketch):
         if not self.p1:
-            self.p1 = sketch.getPressedPosition()
+            self.p1 = Point(0, sketch.getPressedPosition().y)  # Set the first point to the left edge of the canvas
 
     def mouseReleased(self, sketch):
         if self.p1:
-            p2 = Point(sketch.width(), self.p1.y)  # Set the second point to the canvas width
+            p2 = Point(sketch.width(), self.p1.y)  # Set the second point to the right edge of the canvas
             sketch.addLine(Line(self.p1, p2))
             sketch.update()
             self.p1 = None
