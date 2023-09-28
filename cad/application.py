@@ -255,6 +255,7 @@ class Application(QMainWindow):
             self.parallelAction(),
             # self.perpendicularAction(),
             self.verticalAction(),
+            self.verticleLineAction(),
             self.horizontalAction(),
             self.horizontalLineAction(),
             self.coincidentAction(),
@@ -330,7 +331,7 @@ class Application(QMainWindow):
         self.sketch.handler = HorizontalHandler()
 
     def horizontalLineAction(self):
-        action = QAction('Horizontal Constraint')
+        action = QAction('Horizontal Line')
         action.setToolTip('Horizontal Line')
         action.setStatusTip('Horizontal Line')
         action.setIcon(QIcon(icon_path('horizontal.png')))
@@ -340,19 +341,29 @@ class Application(QMainWindow):
     def horizontalLineActionHandler(self):
         self.sketch.handler = HorizontalLineHandler()
 
+    def verticleLineAction(self):
+        action = QAction('Verticle Line')
+        action.setToolTip('Verticle Line')
+        action.setStatusTip('Verticle Line')
+        action.setIcon(QIcon(icon_path('vertical.png')))
+        action.triggered.connect(self.verticalLineActionHandler)
+        return action
+
+    def verticalLineActionHandler(self):
+        self.sketch.handler = VerticalLineHandler()
 
     # Define and configure the "Vertical" action
     def verticalAction(self):
         action = QAction('Vertical')
         action.setToolTip('Vertical constraint')
         action.setStatusTip('Vertical constraint')
-        action.setIcon(QIcon(icon_path('vertical.png')))
+        action.setIcon(QIcon(icon_path('vertical_segment.png')))
         action.triggered.connect(self.verticalActionHandler)
         return action
 
     # Handler for the "Vertical" action
     def verticalActionHandler(self):
-        self.sketch.handler = VerticalLineHandler()
+        self.sketch.handler = VerticalHandler()
 
     # Define and configure the "Angle" action
     def angleAction(self):
