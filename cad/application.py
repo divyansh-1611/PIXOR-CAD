@@ -403,11 +403,8 @@ class Application(QMainWindow):
     def rectangleActionHandler(self):
         self.sketch.handler = RectangleHandler()
 
-<<<<<<< HEAD
-=======
     
     # Handler for the "Parallel" action
->>>>>>> 6217d3548653da48b44b925ce7d3867bbbd8c5cc
     def parallelsActionHandler(self):
         self.sketch.handler = ParallelHandler()
 
