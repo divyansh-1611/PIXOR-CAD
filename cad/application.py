@@ -265,7 +265,6 @@ class Application(QMainWindow):
             self.drawCircleAction(),
             self.drawArcwithtwopointsAction(),
             self.EraserAction(),
-            self.typeTextAction(),
         ]
 
         for action in actions:
@@ -519,20 +518,6 @@ class Application(QMainWindow):
     def EraserActionHandler(self):
         self.sketch.handler = EraserHandler()
 
-
-    # Define and configure the "Type Text" action
-    def typeTextAction(self):
-        action = QAction('typeText')
-        action.setToolTip('typeText constraint')
-        action.setStatusTip('typeText constraint')
-        action.setIcon(QIcon(icon_path('Type.png')))
-        # action.triggered.connect(self.EraserActionHandler)
-        return action
-  
-    ''' # Handler for the "typeText" action
-    def typeTextHandler(self):
-        self.sketch.handler = typeTextHandler()
-    '''
 
     # Define and configure the "Disable" action
     def disableAction(self):
