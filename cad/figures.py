@@ -1,4 +1,5 @@
 from PyQt5.QtCore import QPointF, QLineF, QRect
+from cad import pen
 
 
 class Point:
@@ -43,9 +44,21 @@ class Point:
         return abs(s) / l.length
 
 class Circle:
-    def __init__(self, center, radius):
+    def __init__(self, center, radius, outline_color=pen.COLOR):
         self.center = center
         self.radius = radius
+        self.outline_color = outline_color
+        self.selected = False
+
+    def contains(self, point):
+        # Check if the point is within the circle
+        return self.center.distToPoint(point) <= self.radius
+
+    def select(self):
+        self.selected = True
+
+    def deselect(self):
+        self.selected = False
 
     def toQtRect(self):
         # Calculate integer coordinates for the rectangle

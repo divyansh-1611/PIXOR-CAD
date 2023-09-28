@@ -1,6 +1,7 @@
 from abc import abstractmethod
 
 import numpy as np
+from PyQt5 import QtGui
 from scipy.optimize import fsolve
 
 from cad import pen
@@ -340,7 +341,6 @@ class HorizontalLineHandler(Handler):
             self.p1 = None
 
 class CircleDrawingHandler(Handler):
-
     def __init__(self):
         self.center = None
         self.radius = None
@@ -351,20 +351,21 @@ class CircleDrawingHandler(Handler):
 
     def mouseReleased(self, sketch):
         if self.center:
-            radius = self.center.distToPoint(sketch.getCurrentPosition())
+            radius = self.center.distToPoint(sketch.currentPos)
             sketch.addCircle(Circle(self.center, radius))
             sketch.update()
             self.center = None
 
     def mouseMoved(self, sketch):
         if self.center:
-            self.radius = self.center.distToPoint(sketch.getCurrentPosition())
+            self.radius = self.center.distToPoint(sketch.currentPos)
             sketch.update()
 
     def draw(self, painter):
-        if self.center and self.radius:
-            painter.setPen(pen.activeLine)
-            painter.drawEllipse(self.center.toQtPoint(), self.radius, self.radius)
+        if self.center:
+            painter.setPen(pen.line)
+            painter.setBrush(QtGui.QBrush(QtGui.QColor(0, 0, 0, 0)))  # Transparent fill
+            painter.drawEllipse(self.center.toQtPoint(), int(self.radius), int(self.radius))
 
 class Vertical(Constraint, Handler):
 

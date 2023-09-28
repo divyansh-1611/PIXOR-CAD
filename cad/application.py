@@ -3,6 +3,8 @@ import os
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import *
+from PIL import Image
+import ezdxf
 
 from cad.sketch import Sketch
 from cad.solver import *
@@ -53,8 +55,8 @@ class Application(QMainWindow):
         file = self.menu.addMenu('File')
         file.addAction(self.exitAction())
         file.addAction(self.openAction())
-        file.addAction(self.saveAction())
-        file.addAction(self.saveasAction())
+        file.addAction(self.saveImageAction())
+        file.addAction(self.saveDxfAction())
         file.addAction(self.importAction())
         file.addAction(self.shareAction())
         file.addAction(self.print())
@@ -207,20 +209,28 @@ class Application(QMainWindow):
         action.triggered.connect(self.close)
         return action
 
-    # Define and configure the "Save" action
-    def saveAction(self):
-        action = QAction('Save', self.menu)
-        action.setShortcut('Ctrl+S')
-        action.setToolTip('Save current application')
-        action.setStatusTip('Save current application')
-        action.triggered.connect(self.showSaveDialog)
+    def saveImageAction(self):
+        action = QAction('Save as Image', self.menu)
+        action.setShortcut('Ctrl+Shift+I')
+        action.setStatusTip('Save as Image')
+        action.setToolTip('Save as Image')
+        action.triggered.connect(self.saveImage)
+        return action
+
+    def saveDxfAction(self):
+        action = QAction('Save as DXF', self.menu)
+        action.setShortcut('Ctrl+Shift+D')
+        action.setStatusTip('Save as DXF')
+        action.setToolTip('Save as DXF')
+        action.triggered.connect(self.saveDxf)
         return action
 
     # Define and configure the "Import" action (not implemented)
     def importAction(self):
-        action = QAction('Import', self.menu)
-        action.setToolTip('Import')
-        action.setStatusTip('Import')
+        action = QAction('Import as DXF', self.menu)
+        action.setToolTip('Import as DXF')
+        action.setStatusTip('Import as DXF')
+        action.triggered.connect(self.importDxf)
         return action
 
     # Define and configure the "Share" action (not implemented)
@@ -571,14 +581,44 @@ class Application(QMainWindow):
             with open(files[0], 'r') as fp:
                 fp.read()
 
-    # Show the save file dialog
-    def showSaveDialog(self):
-        ext = '*.json'
-        title = 'Save as'
-        default = '/home/cad.json'
-        options = QFileDialog.Options() 
+    def importDxf(self):
+        options = QFileDialog.Options()
         options |= QFileDialog.ReadOnly
-        files = QFileDialog().getSaveFileName(self, title, default, ext, options=options)
+        files, _ = QFileDialog.getOpenFileName(self, 'Import DXF', '', 'DXF Files (*.dxf)', options=options)
+        if files:
+            doc = ezdxf.readfile(files)
+            msp = doc.modelspace()
+            self.sketch.lines.clear()  # Clear existing lines
+            for entity in msp.query('LINE'):
+                start_point = entity.dxf.start
+                end_point = entity.dxf.end
+                p1 = Point(start_point.x, -start_point.y)  # Invert Y-coordinate as needed
+                p2 = Point(end_point.x, -end_point.y)      # Invert Y-coordinate as needed
+                self.sketch.addLine(Line(p1, p2))
+            self.sketch.update()
+
+    # Show the save file as dxf dialog
+    def saveImage(self):
+        options = QFileDialog.Options()
+        options |= QFileDialog.ReadOnly
+        files, _ = QFileDialog.getSaveFileName(self, 'Save Image', '', 'PNG Image (*.png);;JPEG Image (*.jpg)',
+                                               options=options)
+        if files:
+            pixmap = self.sketch.grab()
+            pixmap.save(files)
+
+    def saveDxf(self):
+        options = QFileDialog.Options()
+        options |= QFileDialog.ReadOnly
+        files, _ = QFileDialog.getSaveFileName(self, 'Save DXF', '', 'DXF Files (*.dxf)', options=options)
+        if files:
+            doc = ezdxf.new()
+            msp = doc.modelspace()
+            for line in self.sketch.lines:
+                p1_tuple = (line.p1.x, line.p1.y)
+                p2_tuple = (line.p2.x, line.p2.y)
+                msp.add_lwpolyline([p1_tuple, p2_tuple])
+            doc.saveas(files)
 
     # Show the save file as dialog (not implemented)
     def showSaveasDialog(self):
