@@ -501,7 +501,7 @@ class Application(QMainWindow):
         self.sketch.handler = drawArcwithtwopointsHandler()
     '''
 
-     # Define and configure the "Eraser" action
+    # Define and configure the "Eraser" action
     def EraserAction(self):
         action = QAction('Eraser')
         action.setToolTip('Eraser constraint')

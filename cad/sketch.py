@@ -83,10 +83,10 @@ class Sketch(QtWidgets.QWidget):
         self.pressedPos = Point.fromQtPoint(position)
 
         # Check if the user clicked on an object to erase it
-        if event.button() == QtCore.Qt.LeftButton:
+        '''if event.button() == QtCore.Qt.LeftButton:
             if self.removeSelectedFigure():
                 self.update()
-                return
+                return'''
 
         self.handler.mousePressed(self)
 
