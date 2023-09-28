@@ -5,6 +5,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import *
 from PIL import Image
 import ezdxf
+from ezdxf.entities import Circle
 
 from cad.sketch import Sketch
 from cad.solver import *
@@ -576,20 +577,25 @@ class Application(QMainWindow):
             doc = ezdxf.readfile(files)
             msp = doc.modelspace()
             self.sketch.lines.clear()  # Clear existing lines
+            self.sketch.circles.clear()  # Clear existing circles
             for entity in msp.query('LINE'):
                 start_point = entity.dxf.start
                 end_point = entity.dxf.end
                 p1 = Point(start_point.x, -start_point.y)  # Invert Y-coordinate as needed
-                p2 = Point(end_point.x, -end_point.y)      # Invert Y-coordinate as needed
+                p2 = Point(end_point.x, -end_point.y)  # Invert Y-coordinate as needed
                 self.sketch.addLine(Line(p1, p2))
+            for entity in msp.query('CIRCLE'):
+                center = entity.dxf.center
+                radius = entity.dxf.radius
+                center_point = Point(center.x, -center.y)  # Invert Y-coordinate as needed
+                self.sketch.addCircle(Circle(center_point, radius))
             self.sketch.update()
 
     # Show the save file as dxf dialog
     def saveImage(self):
         options = QFileDialog.Options()
         options |= QFileDialog.ReadOnly
-        files, _ = QFileDialog.getSaveFileName(self, 'Save Image', '', 'PNG Image (*.png);;JPEG Image (*.jpg)',
-                                               options=options)
+        files, _ = QFileDialog.getSaveFileName(self, 'Save Image', '', 'PNG Image (*.png);;JPEG Image (*.jpg)',options=options)
         if files:
             pixmap = self.sketch.grab()
             pixmap.save(files)
@@ -601,10 +607,19 @@ class Application(QMainWindow):
         if files:
             doc = ezdxf.new()
             msp = doc.modelspace()
+
+            # Export lines
             for line in self.sketch.lines:
                 p1_tuple = (line.p1.x, line.p1.y)
                 p2_tuple = (line.p2.x, line.p2.y)
                 msp.add_lwpolyline([p1_tuple, p2_tuple])
+
+            # Export circles
+            for circle in self.sketch.circles:
+                center_tuple = (circle.center.x, circle.center.y)
+                radius = circle.radius
+                msp.add_circle(center_tuple, radius)
+
             doc.saveas(files)
 
     # Show the save file as dialog (not implemented)
