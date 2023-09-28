@@ -1,11 +1,11 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPen
 
-WIDTH = 5
+WIDTH = 2
 COLOR = Qt.black
 STYLE = Qt.SolidLine
 
-ACTIVE_WIDTH = 7
+ACTIVE_WIDTH = 5
 ACTIVE_COLOR = Qt.red 
 ACTIVE_STYLE = STYLE
 

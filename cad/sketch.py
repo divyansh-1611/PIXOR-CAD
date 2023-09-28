@@ -11,7 +11,7 @@ class Sketch(QtWidgets.QWidget):
 
         self.lines = []
         self.points = []
-
+        self.circles = []
         self.currentPos = None
         self.pressedPos = None
 
@@ -23,6 +23,14 @@ class Sketch(QtWidgets.QWidget):
 
     def addLine(self, line: Line):
         self.lines.append(line)
+
+    def addCircle(self, circle: Circle):
+        self.circles.append(circle)
+
+    def drawCircles(self, painter):
+        for circle in self.circles:
+            painter.setPen(pen.activeLine)
+            painter.drawEllipse(circle.toQtRect())
 
     def addPoint(self, point: Point):
         self.points.append(point)
@@ -74,8 +82,21 @@ class Sketch(QtWidgets.QWidget):
         position = event.localPos()
         self.pressedPos = Point.fromQtPoint(position)
 
+        # Check if the user clicked on an object to erase it
+        if event.button() == QtCore.Qt.LeftButton:
+            if self.removeSelectedFigure():
+                self.update()
+                return
+
         self.handler.mousePressed(self)
 
+    def removeSelectedFigure(self):
+        # Check if the user clicked on a line to remove it
+        line = self.getActiveLine()
+        if line:
+            self.lines.remove(line)
+            return True
+        
     def mouseReleaseEvent(self, event):
         if event.button() == QtCore.Qt.LeftButton:
             self.pressedPos = None
@@ -100,6 +121,7 @@ class Sketch(QtWidgets.QWidget):
         painter.begin(self)
         self.drawLines(painter)
         self.drawPoints(painter)
+        self.drawCircles(painter)
         self.drawActive(painter)
         painter.end()
 

@@ -3,7 +3,8 @@ from abc import abstractmethod
 import numpy as np
 from scipy.optimize import fsolve
 
-from cad.figures import Point, Line
+from cad import pen
+from cad.figures import *
 
 
 class System(object):
@@ -297,6 +298,21 @@ class VerticalHandler(Handler):
             sketch.system.addConstraint(Vertical(line))
             sketch.update()
 
+class VerticalLineHandler(Handler):
+
+    def __init__(self):
+        self.p1 = None
+
+    def mousePressed(self, sketch):
+        if not self.p1:
+            self.p1 = sketch.getPressedPosition()
+
+    def mouseReleased(self, sketch):
+        if self.p1:
+            p2 = Point(self.p1.x, 0)  # Set the second point to the top of the canvas (y-coordinate 0)
+            sketch.addLine(Line(self.p1, p2))
+            sketch.update()
+            self.p1 = None
 
 class HorizontalHandler(Handler):
 
@@ -307,6 +323,48 @@ class HorizontalHandler(Handler):
             sketch.system.addConstraint(constraint)
             sketch.update()
 
+class HorizontalLineHandler(Handler):
+
+    def __init__(self):
+        self.p1 = None
+
+    def mousePressed(self, sketch):
+        if not self.p1:
+            self.p1 = sketch.getPressedPosition()
+
+    def mouseReleased(self, sketch):
+        if self.p1:
+            p2 = Point(sketch.width(), self.p1.y)  # Set the second point to the canvas width
+            sketch.addLine(Line(self.p1, p2))
+            sketch.update()
+            self.p1 = None
+
+class CircleDrawingHandler(Handler):
+
+    def __init__(self):
+        self.center = None
+        self.radius = None
+
+    def mousePressed(self, sketch):
+        if not self.center:
+            self.center = sketch.getPressedPosition()
+
+    def mouseReleased(self, sketch):
+        if self.center:
+            radius = self.center.distToPoint(sketch.getCurrentPosition())
+            sketch.addCircle(Circle(self.center, radius))
+            sketch.update()
+            self.center = None
+
+    def mouseMoved(self, sketch):
+        if self.center:
+            self.radius = self.center.distToPoint(sketch.getCurrentPosition())
+            sketch.update()
+
+    def draw(self, painter):
+        if self.center and self.radius:
+            painter.setPen(pen.activeLine)
+            painter.drawEllipse(self.center.toQtPoint(), self.radius, self.radius)
 
 class Vertical(Constraint, Handler):
 
@@ -353,6 +411,41 @@ class Horizontal(Constraint):
 
         y[n] = x[i2] - x[i1]
 
+class EraserHandler(Handler):
+    def __init__(self):
+        super().__init__()
+
+    def mousePressed(self, sketch):
+        self.sketch = sketch
+        self.eraseObject()
+
+    def eraseObject(self):
+        active_line = self.getActiveLine()
+        active_point = self.getActivePoint()
+
+        if active_line:
+            self.sketch.lines.remove(active_line)
+        elif active_point:
+            if active_point in self.sketch.points:
+                self.sketch.points.remove(active_point)
+
+        self.sketch.update()
+
+    def getActiveLine(self):
+        for line in self.sketch.lines:
+            if line.hasPoint(self.sketch.currentPos, 4):
+                return line
+        return None
+
+    def getActivePoint(self):
+        for line in self.sketch.lines:
+            for point in line.points:
+                if point.distToPoint(self.sketch.currentPos) < 4:
+                    return point
+        for point in self.sketch.points:
+            if point.distToPoint(self.sketch.currentPos) < 4:
+                return point
+        return None
 
 class CoincidentHandler(Handler):
 

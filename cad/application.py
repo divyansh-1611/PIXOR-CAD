@@ -7,13 +7,14 @@ from PyQt5.QtWidgets import *
 from cad.sketch import Sketch
 from cad.solver import *
 
+# get the directory of the current file
 directory = os.path.dirname(__file__)
 
-
+# Function to get the path of an icon file
 def icon_path(name: str) -> str:
     return os.path.join(directory, 'icons', name)
 
-
+# Main application class
 class Application(QMainWindow):
 
     def __init__(self, *args):
@@ -26,20 +27,29 @@ class Application(QMainWindow):
         self.toolBarGroup = None
 
         self.initSketch()
+        # Initialize the sketch area
         self.initMenuBar()
+        # Initialize the menu bar
         self.initToolBar()
+        # Initialize the tool bar
         self.initStatusBar()
+        # Initialize the status bar
         self.initGeometry()
+        # Initialize the application window geometry 
 
         self.setWindowTitle('PIXOR-Cad')
+        # Set the window title
 
+    # Initialize the sketch area
     def initSketch(self):
         self.sketch = Sketch(self)
         self.setCentralWidget(self.sketch)
 
+    # Initialize the menu bar
     def initMenuBar(self):
         self.menu = self.menuBar()
 
+        # File menu
         file = self.menu.addMenu('File')
         file.addAction(self.exitAction())
         file.addAction(self.openAction())
@@ -49,6 +59,7 @@ class Application(QMainWindow):
         file.addAction(self.shareAction())
         file.addAction(self.print())
 
+        # Edit menu
         edit = self.menu.addMenu('Edit')
         edit.addAction(self.undoAction())
         edit.addAction(self.RedoAction())
@@ -58,19 +69,23 @@ class Application(QMainWindow):
         edit.addAction(self.copyAction())
         edit.addAction(self.pasteAction())
 
+        # View menu
         view = self.menu.addMenu("View")
         view.addAction(self.CreateShortcuts())
         view.addAction(self.ChangeContrast())
         view.addAction(self.zoomi())
         view.addAction(self.zoomo())
 
+        # Help menu
         help = self.menu.addMenu("Help")
         help.addAction(self.aboutus())
         help.addAction(self.VersionDetails())
 
+        # Report bugs menu
         report_bugs = self.menu.addMenu("Report Bugs")
         report_bugs.addAction(self.report())
 
+    # Define and configure the "Undo" action
     def undoAction(self):
         action = QAction('Undo', self.menu)
         action.setShortcut('Ctrl+Z')
@@ -78,6 +93,7 @@ class Application(QMainWindow):
         action.setToolTip('Undo')
         return action
     
+    # Define and configure the "Redo" action
     def RedoAction(self):
         action = QAction("Redo", self.menu)
         action.setStatusTip("Redo")
@@ -85,6 +101,7 @@ class Application(QMainWindow):
         action.setShortcut("Ctrl+Y")    
         return action
     
+    # Define and configure the "Clear Undo" action
     def ClrundoAction(self):
         action = QAction('Clear Undo', self)
         action.setShortcut('Ctrl+Shift+Z')
@@ -92,6 +109,7 @@ class Application(QMainWindow):
         action.setToolTip('Clear Undo')
         return action
 
+    # Define and configure the "Clear Redo" action
     def Clrredoaction(self):
         action = QAction('Clear Redo', self)
         action.setShortcut('Ctrl+Shift+Y')
@@ -99,18 +117,21 @@ class Application(QMainWindow):
         action.setToolTip('Clear Redo')
         return action
 
+    # Define and configure the "Create Shortcuts" action
     def CreateShortcuts(self):
         action = QAction('Create Shortcuts', self)
         action.setStatusTip('Create Shortcuts')
         action.setToolTip('Create Shortcuts')
         return action
 
+    # Define and configure the "Change Contrast" action
     def ChangeContrast(self):
         action = QAction('Change Contrast', self)
         action.setStatusTip('Change Contrast')
         action.setToolTip('Change Contrast')
         return action
 
+    # Define and configure the "Save As" action
     def saveasAction(self):
         action = QAction("Save as", self)
         action.setShortcut('Ctrl+Shift+S')
@@ -118,42 +139,49 @@ class Application(QMainWindow):
         action.setToolTip("Save as")
         return action
     
+    # Define and configure the "Zoom In" action
     def zoomi(self):
         action = QAction('Zoom In', self)
         action.setStatusTip('Zoom In')
         action.setToolTip('Zoom In')
         return action
 
+    # Define and configure the "Zoom Out" action
     def zoomo(self):
         action = QAction('Zoom Out', self)
         action.setStatusTip('Zoom Out')
         action.setToolTip('Zoom Out')
         return action
 
+    # Define and configure the "About Us" action
     def aboutus(self):
         action = QAction('About Us', self)
         action.setStatusTip('About Us')
         action.setToolTip('About Us')
         return action
 
+    # Define and configure the "Version Details" action
     def VersionDetails(self):
         action = QAction('Version Details', self)
         action.setStatusTip('Version Details')
         action.setToolTip('Version Details')
         return action
 
+    # Define and configure the "Print" action
     def print(self):
         action = QAction('Print', self)
         action.setStatusTip('Print')
         action.setToolTip('Print')
         return action
 
+    # Define and configure the "Report" action
     def report(self):
         action = QAction('Report', self)
         action.setStatusTip('Report')
         action.setToolTip('About Us')
         return action
 
+    # Define and configure the "Cut" action
     def cutAction(self):
         action = QAction('Cut', self.menu)
         action.setShortcut('Ctrl+X')
@@ -161,6 +189,7 @@ class Application(QMainWindow):
         action.setToolTip('Cut')
         return action
     
+    # Define and configure the "Copy" action
     def copyAction(self):
         action = QAction('Copy', self.menu)
         action.setShortcut('Ctrl+C')
@@ -168,6 +197,7 @@ class Application(QMainWindow):
         action.setToolTip('Copy')
         return action
 
+    # Define and configure the "Paste" action
     def pasteAction(self):
         action = QAction('Paste', self.menu)
         action.setShortcut('Ctrl+V')
@@ -175,6 +205,7 @@ class Application(QMainWindow):
         action.setToolTip('Paste')
         return action
 
+    # Define and configure the "Delete" action (not implemented)
     def deleteAction(self):
         action = QAction('Delete', self.menu)
         action.setShortcut('Delete')
@@ -182,6 +213,7 @@ class Application(QMainWindow):
         action.setToolTip('Delete')
         return action
 
+    # Define and configure the "Exit" action
     def exitAction(self):
         action = QAction('Exit', self.menu)
         action.setShortcut('Ctrl+Q')
@@ -190,6 +222,7 @@ class Application(QMainWindow):
         action.triggered.connect(self.close)
         return action
 
+    # Define and configure the "Save" action
     def saveAction(self):
         action = QAction('Save', self.menu)
         action.setShortcut('Ctrl+S')
@@ -198,18 +231,21 @@ class Application(QMainWindow):
         action.triggered.connect(self.showSaveDialog)
         return action
 
+    # Define and configure the "Import" action (not implemented)
     def importAction(self):
         action = QAction('Import', self.menu)
         action.setToolTip('Import')
         action.setStatusTip('Import')
         return action
 
+    # Define and configure the "Share" action (not implemented)
     def shareAction(self):
         action = QAction('Share',self.menu)
         action.setToolTip('Share')
         action.setStatusTip('Share')
         return action
 
+    # Define and configure the "Open" action
     def openAction(self):
         action = QAction('Open', self.menu)
         action.setShortcut('Ctrl+O')
@@ -218,6 +254,7 @@ class Application(QMainWindow):
         action.triggered.connect(self.showOpenDialog)
         return action
 
+    # Initialize the tool bar and its actions
     def initToolBar(self):
         self.toolBar = self.addToolBar('Drawing')
         self.toolBarGroup = QActionGroup(self.toolBar)
@@ -236,7 +273,15 @@ class Application(QMainWindow):
             self.fixedAction(),
             self.angleAction(),
             self.lengthAction(),
+<<<<<<< HEAD
             self.rectangleAction(),
+=======
+            self.polylineAction(),
+            self.drawCircleAction(),
+            self.drawArcwithtwopointsAction(),
+            self.EraserAction(),
+            self.typeTextAction(),
+>>>>>>> 4ef6459a879143572883369a5ca76937fc0774b8
         ]
 
         for action in actions:
@@ -247,6 +292,7 @@ class Application(QMainWindow):
 
         default.setChecked(True)
 
+    # Define and configure the "Point" action
     def pointAction(self):
         action = QAction('Point')
         action.setShortcut('Ctrl+P')
@@ -255,10 +301,12 @@ class Application(QMainWindow):
         action.setIcon(QIcon(icon_path('point.png')))
         action.triggered.connect(self.pointActionHandler)
         return action
-
+    
+    # Handler for the "Point" action
     def pointActionHandler(self):
         self.sketch.handler = PointDrawing()
 
+    # Define and configure the "Line" action
     def lineAction(self):
         action = QAction('Line')
         action.setShortcut('Ctrl+L')
@@ -268,9 +316,11 @@ class Application(QMainWindow):
         action.triggered.connect(self.lineActionHandler)
         return action
 
+    # Handler for the "Line" action
     def lineActionHandler(self):
         self.sketch.handler = LineDrawing()
 
+    # Define and configure the "Horizontal" action
     def horizontalAction(self):
         action = QAction('Horizontal')
         action.setToolTip('Horizontal constraint')
@@ -279,9 +329,11 @@ class Application(QMainWindow):
         action.triggered.connect(self.horizontalActionHandler)
         return action
 
+    # Handler for the "Horizontal" action
     def horizontalActionHandler(self):
-        self.sketch.handler = HorizontalHandler()
+        self.sketch.handler = HorizontalLineHandler()
 
+    # Define and configure the "Vertical" action
     def verticalAction(self):
         action = QAction('Vertical')
         action.setToolTip('Vertical constraint')
@@ -290,9 +342,11 @@ class Application(QMainWindow):
         action.triggered.connect(self.verticalActionHandler)
         return action
 
+    # Handler for the "Vertical" action
     def verticalActionHandler(self):
-        self.sketch.handler = VerticalHandler()
+        self.sketch.handler = VerticalLineHandler()
 
+    # Define and configure the "Angle" action
     def angleAction(self):
         action = QAction('Angle')
         action.setToolTip('Angle constraint')
@@ -301,8 +355,9 @@ class Application(QMainWindow):
         action.triggered.connect(self.angleActionHandler)
         return action
 
+    # Handler for the "Angle" action
     def angleActionHandler(self):
-
+        # Function to ask for angle value
         def askAngleValue():
             label = 'Input angle value:'
             title = 'Set angle constraint'
@@ -312,6 +367,7 @@ class Application(QMainWindow):
         if ok:
             self.sketch.handler = AngleHandler(angle)
 
+    # Define and configure the "Length" action
     def lengthAction(self):
         action = QAction('Length')
         action.setToolTip('Length constraint')
@@ -320,8 +376,9 @@ class Application(QMainWindow):
         action.triggered.connect(self.lengthActionHandler)
         return action
 
+    # Handler for the "Length" action
     def lengthActionHandler(self):
-
+        # Function to ask for length value
         def askLengthValue():
             label = 'Input length value:'
             title = 'Set length constraint'
@@ -331,6 +388,7 @@ class Application(QMainWindow):
         if ok:
             self.sketch.handler = LengthHandler(length)
 
+    # Define and configure the "Parallel" action
     def parallelAction(self):
         action = QAction('Parallel')
         action.setToolTip('Parallel constraint')
@@ -338,6 +396,7 @@ class Application(QMainWindow):
         action.setIcon(QIcon(icon_path('parallel.png')))
         action.triggered.connect(self.parallelsActionHandler)
         return action
+<<<<<<< HEAD
 
     def rectangleAction(self):
         action = QAction('Rectangle')
@@ -350,9 +409,14 @@ class Application(QMainWindow):
     def rectangleActionHandler(self):
         self.sketch.handler = RectangleHandler()
 
+=======
+    
+    # Handler for the "Parallel" action
+>>>>>>> 4ef6459a879143572883369a5ca76937fc0774b8
     def parallelsActionHandler(self):
         self.sketch.handler = ParallelHandler()
 
+    # Define and configure the "Perpendicular" action (not implemented)
     def perpendicularAction(self):
         action = QAction('Perpendicular')
         action.setToolTip('Perpendicular constraint')
@@ -361,9 +425,11 @@ class Application(QMainWindow):
         action.triggered.connect(self.perpendicularActionHandler)
         return action
 
+    # Handler for the "Perpendicular" action (not implemented)
     def perpendicularActionHandler(self):
         pass
 
+    # Define and configure the "Coincident" action
     def coincidentAction(self):
         action = QAction('Coincident')
         action.setToolTip('Coincident constraint')
@@ -372,9 +438,11 @@ class Application(QMainWindow):
         action.triggered.connect(self.coincidentActionHandler)
         return action
 
+    # Handler for the "Coincident" action
     def coincidentActionHandler(self):
         self.sketch.handler = CoincidentHandler()
 
+    # Define and configure the "Fixed" action
     def fixedAction(self):
         action = QAction('Fixed')
         action.setToolTip('Fixed constraint')
@@ -383,8 +451,10 @@ class Application(QMainWindow):
         action.triggered.connect(self.fixedActionHandler)
         return action
 
+    # Handler for the "Fixed" action
     def fixedActionHandler(self):
 
+        # Function to ask for coordinate values
         def askCoordinateValue():
             label = 'Enter coordinate:'
             title = 'Set fixing constraint'
@@ -396,6 +466,82 @@ class Application(QMainWindow):
             if ok:
                 self.sketch.handler = FixingHandler(x, y)
 
+    # Define and configure the "Polyline" action
+    def polylineAction(self):
+        action = QAction('Polyline')
+        action.setToolTip('Polyline constraint')
+        action.setStatusTip('Polyline constraint')
+        action.setIcon(QIcon(icon_path('polyline.png')))
+        # action.triggered.connect(self.polylineActionHandler)
+        return action
+  
+    ''' # Handler for the "Polyline" action
+    def polylineActionHandler(self):
+        self.sketch.handler = PolylineHandler()
+    '''
+
+     # Define and configure the "Circle" action
+    def drawCircleAction(self):
+        action = QAction('Draw Circle')
+        action.setToolTip('Draw Circle')
+        action.setStatusTip('Draw Circle')
+        action.setIcon(QIcon(icon_path('circle.png')))
+        action.triggered.connect(self.drawCircleActionHandler)
+        return action
+  
+    # Handler for the "drawCircle" action
+    def drawCircleActionHandler(self):
+        self.sketch.handler = CircleDrawingHandler()
+
+     # Define and configure the "Arc with two points" action
+    def drawArcwithtwopointsAction(self):
+        action = QAction('drawArcwithtwopoints')
+        action.setToolTip('drawArcwithtwopoints constraint')
+        action.setStatusTip('drawArcwithtwopoints constraint')
+        action.setIcon(QIcon(icon_path('Arc.png')))
+        # action.triggered.connect(self.drawArcwithtwopointsActionHandler)
+        return action
+  
+    ''' # Handler for the "drawArcwithtwopoints" action
+    def drawArcwithtwopointsHandler(self):
+        self.sketch.handler = drawArcwithtwopointsHandler()
+    '''
+
+     # Define and configure the "Eraser" action
+    def EraserAction(self):
+        action = QAction('Eraser')
+        action.setToolTip('Eraser constraint')
+        action.setStatusTip('Eraser constraint')
+        action.setIcon(QIcon(icon_path('Eraser.png')))
+        action.triggered.connect(self.EraserActionHandler)
+        return action
+
+    def toggleEraserMode(self):
+        eraserButton = self.toolBarGroup.checkedAction()
+        if eraserButton.text() == 'Eraser':
+            self.sketch.handler = EraserHandler(self.sketch)
+        else:
+            self.sketch.handler = DisableHandler()
+    # Handler for the "Eraser" action
+    def EraserActionHandler(self):
+        self.sketch.handler = EraserHandler()
+
+
+    # Define and configure the "Type Text" action
+    def typeTextAction(self):
+        action = QAction('typeText')
+        action.setToolTip('typeText constraint')
+        action.setStatusTip('typeText constraint')
+        action.setIcon(QIcon(icon_path('Type.png')))
+        # action.triggered.connect(self.EraserActionHandler)
+        return action
+  
+    ''' # Handler for the "typeText" action
+    def typeTextHandler(self):
+        self.sketch.handler = typeTextHandler()
+    '''
+
+    # Define and configure the "Disable" action
     def disableAction(self):
         action = QAction('Disable')
         action.setToolTip('Choose action')
@@ -404,19 +550,23 @@ class Application(QMainWindow):
         action.triggered.connect(self.disableActionHandler)
         return action
 
+    # Handler for the "Disable" action
     def disableActionHandler(self):
         for action in self.toolBarGroup.actions():
             action.setChecked(False)
 
         self.toolBarGroup.actions()[0].setChecked(True)
 
+    # Initialize the status bar
     def initStatusBar(self):
         self.statusBar().showMessage('Ready')
 
+    # Initialize the application window geometry
     def initGeometry(self):
         desktop = QDesktopWidget()
         self.setGeometry(desktop.availableGeometry())
 
+    # Show the open file dialog
     def showOpenDialog(self):
         ext = '*.json'
         title = 'Open from'
@@ -429,6 +579,7 @@ class Application(QMainWindow):
             with open(files[0], 'r') as fp:
                 fp.read()
 
+    # Show the save file dialog
     def showSaveDialog(self):
         ext = '*.json'
         title = 'Save as'
@@ -437,6 +588,7 @@ class Application(QMainWindow):
         options |= QFileDialog.ReadOnly
         files = QFileDialog().getSaveFileName(self, title, default, ext, options=options)
 
+    # Show the save file as dialog (not implemented)
     def showSaveasDialog(self):
         title = "Save as"
         default = "/home/cad.json"
@@ -448,12 +600,14 @@ class Application(QMainWindow):
             with open(files[0], 'w') as fp:
                 fp.write('')
 
+    # Handle key press events
     def keyPressEvent(self, event):
         self.sketch.keyPressEvent(event)
 
         if event.key() == Qt.Key_Escape:
             return self.disableActionHandler()
 
+    # Handle close events
     def closeEvent(self, event):
         title = 'Close application'
         question = 'Are you sure you want to quit?'
