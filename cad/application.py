@@ -63,8 +63,6 @@ class Application(QMainWindow):
         edit = self.menu.addMenu('Edit')
         edit.addAction(self.undoAction())
         edit.addAction(self.RedoAction())
-        edit.addAction(self.ClrundoAction())
-        edit.addAction(self.Clrredoaction())
         edit.addAction(self.cutAction())
         edit.addAction(self.copyAction())
         edit.addAction(self.pasteAction())
@@ -100,22 +98,8 @@ class Application(QMainWindow):
         action.setToolTip("Redo")
         action.setShortcut("Ctrl+Y")    
         return action
-    
-    # Define and configure the "Clear Undo" action
-    def ClrundoAction(self):
-        action = QAction('Clear Undo', self)
-        action.setShortcut('Ctrl+Shift+Z')
-        action.setStatusTip('Clear Undo')
-        action.setToolTip('Clear Undo')
-        return action
 
-    # Define and configure the "Clear Redo" action
-    def Clrredoaction(self):
-        action = QAction('Clear Redo', self)
-        action.setShortcut('Ctrl+Shift+Y')
-        action.setStatusTip('Clear Redo')
-        action.setToolTip('Clear Redo')
-        return action
+
 
     # Define and configure the "Create Shortcuts" action
     def CreateShortcuts(self):
@@ -138,7 +122,8 @@ class Application(QMainWindow):
         action.setStatusTip("Save as")
         action.setToolTip("Save as")
         return action
-    
+
+
     # Define and configure the "Zoom In" action
     def zoomi(self):
         action = QAction('Zoom In', self)
@@ -258,12 +243,13 @@ class Application(QMainWindow):
     def initToolBar(self):
         self.toolBar = self.addToolBar('Drawing')
         self.toolBarGroup = QActionGroup(self.toolBar)
-
+        self.moveAction = self.moveObjectAction()
         default = self.disableAction()
 
         actions = [
             default,
             self.lineAction(),
+            self.moveObjectAction(),
             self.pointAction(),
             self.parallelAction(),
             # self.perpendicularAction(),
@@ -302,6 +288,18 @@ class Application(QMainWindow):
     # Handler for the "Point" action
     def pointActionHandler(self):
         self.sketch.handler = PointDrawing()
+
+    def moveObjectAction(self):
+        action = QAction('Move Object', self.toolBar)
+        action.setCheckable(True)
+        action.setToolTip('Move Object')
+        action.setStatusTip('Move Object')
+        action.setIcon(QIcon(icon_path('move.png')))
+        action.triggered.connect(self.moveObjectActionHandler)
+        return action
+
+    def moveObjectActionHandler(self):
+        self.sketch.handler = MoveObjectHandler()
 
     # Define and configure the "Line" action
     def lineAction(self):
@@ -398,13 +396,18 @@ class Application(QMainWindow):
         action = QAction('Rectangle')
         action.setToolTip('Rectangle constraint')
         action.setStatusTip('Rectangle constraint')
-        action.setIcon(QIcon(icon_path('rectangle.jpg')))
+        action.setIcon(QIcon(icon_path('rectangle.png')))
         action.triggered.connect(self.rectangleActionHandler)
         return action
 
     def rectangleActionHandler(self):
         self.sketch.handler = RectangleHandler()
 
+<<<<<<< HEAD
+=======
+    
+    # Handler for the "Parallel" action
+>>>>>>> 6217d3548653da48b44b925ce7d3867bbbd8c5cc
     def parallelsActionHandler(self):
         self.sketch.handler = ParallelHandler()
 
@@ -499,7 +502,7 @@ class Application(QMainWindow):
         self.sketch.handler = drawArcwithtwopointsHandler()
     '''
 
-     # Define and configure the "Eraser" action
+    # Define and configure the "Eraser" action
     def EraserAction(self):
         action = QAction('Eraser')
         action.setToolTip('Eraser constraint')
