@@ -306,11 +306,11 @@ class VerticalLineHandler(Handler):
 
     def mousePressed(self, sketch):
         if not self.p1:
-            self.p1 = sketch.getPressedPosition()
+            self.p1 = Point(sketch.getPressedPosition().x, 0)  # Set the first point to the top of the canvas
 
     def mouseReleased(self, sketch):
         if self.p1:
-            p2 = Point(self.p1.x, 0)  # Set the second point to the top of the canvas (y-coordinate 0)
+            p2 = Point(self.p1.x, sketch.height())  # Set the second point to the bottom of the canvas
             sketch.addLine(Line(self.p1, p2))
             sketch.update()
             self.p1 = None
