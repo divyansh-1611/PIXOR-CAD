@@ -24,10 +24,10 @@ Essentially, anyone who needs a user-friendly and accessible tool for creating, 
 
 Some success metrics that are defined to evaluate the effectiveness of the software are: 
 
-1. User activity - measuring the number of users actively using the software. 
-1. Error rates - tracking the number of errors faced by the end user. 
-1. Feature usage – monitoring the features used and demanded by the targeted userbase. 
-1. User satisfaction - gathering the feedback on user satisfaction and suggestions for improvements. 
+1. **User activity** - measuring the number of users actively using the software. 
+1. **Error rates** - tracking the number of errors faced by the end user. 
+1. **Feature usage** – monitoring the features used and demanded by the targeted userbase. 
+1. **User satisfaction** - gathering the feedback on user satisfaction and suggestions for improvements. 
 
 ---
 
